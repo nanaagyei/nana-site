@@ -1,0 +1,246 @@
+@import "tailwindcss";
+
+/* ─── Paper & Ink palette ─── */
+:root {
+  --paper:       oklch(0.94 0.02 75);
+  --paper-deep:  oklch(0.91 0.025 75);
+  --paper-edge:  oklch(0.87 0.03 75);
+
+  --ink:         oklch(0.18 0.02 55);
+  --ink-soft:    oklch(0.30 0.025 55);
+  --ink-faded:   oklch(0.52 0.02 60);
+
+  --terracotta:  oklch(0.50 0.14 30);
+  --moss:        oklch(0.42 0.06 160);
+  --ochre:       oklch(0.65 0.14 75);
+
+  --ink-on-accent: oklch(0.94 0.02 75);
+  --selection:   oklch(0.65 0.14 75 / 0.25);
+}
+
+@theme inline {
+  --color-paper:       var(--paper);
+  --color-paper-deep:  var(--paper-deep);
+  --color-paper-edge:  var(--paper-edge);
+  --color-ink:         var(--ink);
+  --color-ink-soft:    var(--ink-soft);
+  --color-ink-faded:   var(--ink-faded);
+  --color-terracotta:  var(--terracotta);
+  --color-moss:        var(--moss);
+  --color-ochre:       var(--ochre);
+  --color-ink-on-accent: var(--ink-on-accent);
+  --color-selection:   var(--selection);
+
+  --font-display: var(--font-fraunces);
+  --font-body:    var(--font-instrument-sans);
+  --font-mono:    var(--font-jetbrains-mono);
+
+  /* Type scale (1.25 ratio, 17px body) */
+  --text-xs:    0.75rem;
+  --text-sm:    0.875rem;
+  --text-base:  1.0625rem;
+  --text-lg:    1.25rem;
+  --text-xl:    1.5rem;
+  --text-2xl:   2rem;
+  --text-3xl:   2.75rem;
+  --text-4xl:   4rem;
+
+  /* Spacing scale (4px base) */
+  --spacing-1:  0.25rem;
+  --spacing-2:  0.5rem;
+  --spacing-3:  0.75rem;
+  --spacing-4:  1rem;
+  --spacing-6:  1.5rem;
+  --spacing-8:  2rem;
+  --spacing-12: 3rem;
+  --spacing-16: 4rem;
+  --spacing-24: 6rem;
+  --spacing-32: 8rem;
+  --spacing-48: 12rem;
+
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-out-expo:  cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ─── Base ─── */
+::selection {
+  background: var(--selection);
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-size: var(--text-base);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-kerning: normal;
+  font-optical-sizing: auto;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display), Georgia, serif;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+  color: var(--ink);
+}
+
+article p {
+  text-wrap: pretty;
+}
+
+code, pre {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-variant-ligatures: none;
+}
+
+/* ─── Focus states ─── */
+:focus-visible {
+  outline: 2px solid var(--terracotta);
+  outline-offset: 2px;
+}
+
+/* ─── Prose (for rendered markdown) ─── */
+.prose-custom {
+  font-size: var(--text-base);
+  line-height: 1.7;
+  color: var(--ink-soft);
+}
+
+.prose-custom h1 {
+  font-family: var(--font-display), Georgia, serif;
+  font-size: var(--text-2xl);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin-top: 2.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.prose-custom h2 {
+  font-family: var(--font-display), Georgia, serif;
+  font-size: var(--text-xl);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+}
+
+.prose-custom h3 {
+  font-family: var(--font-display), Georgia, serif;
+  font-size: var(--text-lg);
+  font-weight: 400;
+  color: var(--ink);
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.prose-custom p {
+  margin-bottom: 1rem;
+}
+
+.prose-custom p:last-child {
+  margin-bottom: 0;
+}
+
+.prose-custom strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.prose-custom em {
+  font-style: italic;
+}
+
+.prose-custom a {
+  color: var(--terracotta);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color 0.2s;
+}
+
+.prose-custom a:hover {
+  color: var(--ink);
+}
+
+.prose-custom ul,
+.prose-custom ol {
+  margin: 1rem 0;
+  padding-left: 1.5rem;
+}
+
+.prose-custom ul {
+  list-style: disc;
+}
+
+.prose-custom ol {
+  list-style: decimal;
+}
+
+.prose-custom li {
+  margin-bottom: 0.375rem;
+}
+
+.prose-custom li::marker {
+  color: var(--ink-faded);
+}
+
+.prose-custom blockquote {
+  margin: 1.5rem 0;
+  padding-left: 1rem;
+  border-left: 2px solid var(--paper-edge);
+  color: var(--ink-faded);
+  font-style: italic;
+}
+
+.prose-custom code {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.875em;
+  background: var(--paper-deep);
+  padding: 0.15em 0.35em;
+  border-radius: 3px;
+  color: var(--ink);
+}
+
+.prose-custom pre {
+  margin: 1.5rem 0;
+  padding: 1rem 1.25rem;
+  background: var(--paper-deep);
+  border-radius: 4px;
+  overflow-x: auto;
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+.prose-custom pre code {
+  background: none;
+  padding: 0;
+  border-radius: 0;
+}
+
+.prose-custom hr {
+  border: none;
+  border-top: 1px solid var(--paper-edge);
+  margin: 2rem 0;
+}
+
+.prose-custom img {
+  max-width: 100%;
+  border-radius: 4px;
+  margin: 1.5rem 0;
+}
+
+/* ─── Reduced motion ─── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

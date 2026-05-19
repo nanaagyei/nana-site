@@ -1,0 +1,15 @@
+---
+slug: "stormlog-leaks-lab"
+title: "Stormlog Leaks Lab"
+subtitle: "Hands-on catalog of four PyTorch memory leak patterns on Apple Silicon"
+year: 2026
+status: "active"
+role: "Creator"
+stack: ["Python", "PyTorch", "Stormlog", "MPS"]
+links:
+  github: "https://github.com/nanaagyei/stormlog-leaks-lab"
+featured: false
+order: 5
+---
+
+A hands-on catalog of four common PyTorch memory leaks on Apple Silicon's MPS backend, each demonstrated on a real workload (CIFAR-10 with ResNet-18) and fixed with a minimal code change. Covers forward hook activations, missing zero_grad, device tensor retention, and autocast scope issues, all profiled using Stormlog. Built to stress-test the profiler on diverse leak patterns and document how the same code can leak on MPS while staying quiet on CUDA.
