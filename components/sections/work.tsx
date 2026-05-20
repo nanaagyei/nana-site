@@ -20,6 +20,7 @@ type FeaturedProject = {
   stack: string[];
   github: string;
   site?: string;
+  subItems?: { label: string; href: string }[];
 };
 
 const FEATURED: FeaturedProject[] = [
@@ -27,10 +28,14 @@ const FEATURED: FeaturedProject[] = [
     slug: "stormlog",
     title: "Stormlog",
     subtitle: "GPU memory profiling for PyTorch & TensorFlow",
-    year: 2024,
+    year: 2025,
     stack: ["Python", "PyTorch", "Textual"],
     github: "https://github.com/Silas-Asamoah/stormlog",
     site: "https://stormlog.dev",
+    subItems: [
+      { label: "PyPI", href: "https://pypi.org/project/stormlog/" },
+      { label: "Leaks Lab", href: "https://github.com/nanaagyei/stormlog-leaks-lab" },
+    ],
   },
   {
     slug: "regexlens",
@@ -250,6 +255,21 @@ function FeaturedCard({
             </div>
           </div>
           <p className="mt-1 text-sm text-ink-soft">{project.subtitle}</p>
+          {project.subItems && (
+            <div className="mt-2 flex gap-3">
+              {project.subItems.map((item) => (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-xs text-terracotta transition-colors duration-200 hover:text-ink"
+                >
+                  {item.label} →
+                </a>
+              ))}
+            </div>
+          )}
           <div className="mt-3 flex flex-wrap gap-1.5">
             {project.stack.map((tech) => (
               <Pill key={tech} variant="moss">

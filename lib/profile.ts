@@ -11,9 +11,9 @@ export const profile = {
   one_liner:
     "Math-trained software engineer building open-source developer tools, learning ML/AI engineering in public.",
   bio: [
-    "I studied mathematics through a master's degree at Oregon State University, where I developed the habit of thinking in proofs and abstractions. That training shapes how I approach software: I want to understand why something works, not just that it works.",
-    "After grad school I moved into software QA at dynaConnections, where I build test frameworks, write automation, and work across the full stack. On my own time I build open-source tools in the ML/AI space, from GPU memory profilers to RAG evaluation frameworks.",
-    "I co-founded the Akomapa Health Foundation, a nonprofit where I serve as CTO building Nkwapa, a patient management platform for underserved communities in Ghana. Everything I build comes back to the same impulse: make careful tools that solve real problems.",
+    "Hey, I'm Prince — most people call me Nana. I'm a mathematician turned software engineer based in Austin. I love building things that help people think more clearly, whether that's a tool for debugging GPU memory or a platform connecting patients with healthcare.",
+    "I studied math through a master's at Oregon State, and that way of thinking stuck with me — I care about understanding systems deeply, not just getting them to run. These days I work in software QA at dynaConnections and spend my evenings building open-source tools in the ML/AI space.",
+    "I'm especially drawn to the intersection of low-level systems and machine learning — profiling memory, understanding how models behave under the hood, and making that knowledge accessible. I also co-founded the Akomapa Health Foundation, where I lead the tech behind Nkwapa, a patient management platform for underserved communities back home in Ghana.",
   ],
   experience: [
     {
