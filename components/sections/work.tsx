@@ -2,6 +2,7 @@
 
 import { useRef } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
@@ -20,6 +21,7 @@ type FeaturedProject = {
   stack: string[];
   github: string;
   site?: string;
+  image?: string;
   subItems?: { label: string; href: string }[];
 };
 
@@ -32,6 +34,7 @@ const FEATURED: FeaturedProject[] = [
     stack: ["Python", "PyTorch", "Textual"],
     github: "https://github.com/Silas-Asamoah/stormlog",
     site: "https://stormlog.dev",
+    image: "/images/projects/stormlog.png",
     subItems: [
       { label: "PyPI", href: "https://pypi.org/project/stormlog/" },
       { label: "Leaks Lab", href: "https://github.com/nanaagyei/stormlog-leaks-lab" },
@@ -45,6 +48,7 @@ const FEATURED: FeaturedProject[] = [
     stack: ["Next.js", "TypeScript", "React"],
     github: "https://github.com/nanaagyei/regexlens",
     site: "https://regexlens.dev",
+    image: "/images/projects/regexlens.png",
   },
   {
     slug: "guidr",
@@ -53,6 +57,7 @@ const FEATURED: FeaturedProject[] = [
     year: 2026,
     stack: ["FastAPI", "Next.js", "PostgreSQL"],
     github: "https://github.com/nanaagyei/guidr",
+    image: "/images/projects/guidr.png",
   },
   {
     slug: "gatewise",
@@ -61,6 +66,7 @@ const FEATURED: FeaturedProject[] = [
     year: 2026,
     stack: ["TypeScript", "React Native", "Supabase"],
     github: "",
+    image: "/images/projects/gatewise.png",
   },
 ];
 
@@ -177,46 +183,49 @@ function FeaturedCard({
           isWide ? "col-span-full md:col-span-2" : "col-span-full md:col-span-1"
         )}
       >
-        {/* Cover with abstract pattern */}
-        {primaryLink ? (
-          <a href={primaryLink} target="_blank" rel="noopener noreferrer">
+        {/* Cover */}
+        {(() => {
+          const coverContent = project.image ? (
+            <Image
+              src={project.image}
+              alt={`${project.title} screenshot`}
+              fill
+              sizes={isWide ? "(min-width: 768px) 66vw, 100vw" : "(min-width: 768px) 50vw, 100vw"}
+              className="object-cover object-top will-change-transform"
+            />
+          ) : (
+            <div
+              ref={imageRef}
+              className="absolute inset-0 flex items-center justify-center will-change-transform"
+            >
+              <div className="h-3/4 w-3/4">
+                {PATTERNS[index % PATTERNS.length]}
+              </div>
+            </div>
+          );
+
+          const wrapper = (
             <div className="relative mb-4 overflow-hidden rounded-sm bg-paper-deep text-ink-faded">
               <div
+                ref={project.image ? imageRef : undefined}
                 className={cn(
-                  "flex items-center justify-center",
+                  "relative",
                   isWide ? "aspect-video" : "aspect-4/3"
                 )}
               >
-                <div
-                  ref={imageRef}
-                  className="absolute inset-0 flex items-center justify-center will-change-transform"
-                >
-                  <div className="h-3/4 w-3/4">
-                    {PATTERNS[index % PATTERNS.length]}
-                  </div>
-                </div>
+                {coverContent}
               </div>
             </div>
-          </a>
-        ) : (
-          <div className="relative mb-4 overflow-hidden rounded-sm bg-paper-deep text-ink-faded">
-            <div
-              className={cn(
-                "flex items-center justify-center",
-                isWide ? "aspect-video" : "aspect-4/3"
-              )}
-            >
-              <div
-                ref={imageRef}
-                className="absolute inset-0 flex items-center justify-center will-change-transform"
-              >
-                <div className="h-3/4 w-3/4">
-                  {PATTERNS[index % PATTERNS.length]}
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
+          );
+
+          return primaryLink ? (
+            <a href={primaryLink} target="_blank" rel="noopener noreferrer">
+              {wrapper}
+            </a>
+          ) : (
+            wrapper
+          );
+        })()}
 
         {/* Meta */}
         <div>
