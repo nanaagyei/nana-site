@@ -184,7 +184,7 @@ function FeaturedCard({
               <div
                 className={cn(
                   "flex items-center justify-center",
-                  isWide ? "aspect-[16/9]" : "aspect-[4/3]"
+                  isWide ? "aspect-video" : "aspect-4/3"
                 )}
               >
                 <div
@@ -203,7 +203,7 @@ function FeaturedCard({
             <div
               className={cn(
                 "flex items-center justify-center",
-                isWide ? "aspect-[16/9]" : "aspect-[4/3]"
+                isWide ? "aspect-video" : "aspect-4/3"
               )}
             >
               <div
