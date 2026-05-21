@@ -106,8 +106,20 @@ export function Hero() {
           <span>{profile.role}</span>
         </div>
 
-        <div className="mt-12 text-xs tracking-[0.08em] uppercase text-ink-faded/60 sm:mt-24">
-          scroll
+        <div className="mt-12 sm:mt-24">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="h-5 w-5 animate-bounce text-ink-faded/50"
+            aria-hidden="true"
+          >
+            <path d="M12 5v14" />
+            <path d="m19 12-7 7-7-7" />
+          </svg>
         </div>
       </div>
     </section>

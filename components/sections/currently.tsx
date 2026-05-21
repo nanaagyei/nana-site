@@ -11,8 +11,21 @@ gsap.registerPlugin(ScrollTrigger);
 const NOW_DATA = {
   updated: "May 2026",
   reading: [
-    { title: "Deep Learning", author: "Ian Goodfellow, Yoshua Bengio & Aaron Courville" },
-    { title: "AI Engineering", author: "Chip Huyen" },
+    {
+      title: "Deep Learning",
+      author: "Ian Goodfellow, Yoshua Bengio & Aaron Courville",
+      href: "https://aikosh.indiaai.gov.in/static/Deep+Learning+Ian+Goodfellow.pdf",
+    },
+    {
+      title: "AI Engineering",
+      author: "Chip Huyen",
+      href: "https://github.com/PratyushDS/AI-Books/blob/main/AI%20Engineering_%20Building%20Applications%20With%20Foundation%20Models%20by%20Chip%20Huyen%20(1).pdf",
+    },
+    {
+      title: "Designing Machine Learning Systems",
+      author: "Chip Huyen",
+      href: "https://github.com/PratyushDS/AI-Books/blob/main/Designing%20Machine%20Learning%20Systems.pdf",
+    },
   ],
   building: [
     {
@@ -29,9 +42,17 @@ const NOW_DATA = {
     },
   ],
   learning: [
-    { title: "GPU profiling and CUDA optimization" },
-    { title: "Deep learning fundamentals and theory" },
-    { title: "Low-level memory management for ML workloads" },
+    {
+      title: "GPU profiling and CUDA optimization",
+      book: "Programming Massively Parallel Processors by Wen-mei Hwu",
+      bookHref: "https://github.com/h3ct0rjs/HighPerformanceComputing/blob/master/BookRef/Programming%20Massively%20Parallel%20Processors.pdf",
+    },
+    { 
+      title: "Deep learning fundamentals and theory", 
+      book: "Deep Learning by Ian Goodfellow, Yoshua Bengio & Aaron Courville", 
+      bookHref: "https://aikosh.indiaai.gov.in/static/Deep+Learning+Ian+Goodfellow.pdf" 
+    },
+    { title: "ML Systems", book: "Machine Learning Systems by Vijay J. Reddi", bookHref: "https://mlsysbook.ai/index.html" },
   ],
 };
 
@@ -61,8 +82,17 @@ function ReadingContent() {
     <ul className="space-y-3">
       {NOW_DATA.reading.map((item) => (
         <li key={item.title}>
-          <span className="text-sm italic text-ink">{item.title}</span>
-          <span className="block text-xs text-ink-faded">{item.author}</span>
+          <a
+            href={item.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group"
+          >
+            <span className="text-sm italic text-ink transition-colors duration-200 group-hover:text-terracotta">
+              {item.title}
+            </span>
+            <span className="block text-xs text-ink-faded">{item.author}</span>
+          </a>
         </li>
       ))}
     </ul>
@@ -90,6 +120,16 @@ function LearningContent() {
       {NOW_DATA.learning.map((item) => (
         <li key={item.title}>
           <span className="text-sm text-ink">{item.title}</span>
+          {item.book && item.bookHref && (
+            <a
+              href={item.bookHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-0.5 block text-xs italic text-ink-faded transition-colors duration-200 hover:text-terracotta"
+            >
+              {item.book} →
+            </a>
+          )}
         </li>
       ))}
     </ul>

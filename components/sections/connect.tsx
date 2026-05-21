@@ -1,4 +1,5 @@
 import { Reveal } from "@/components/primitives/reveal";
+import { GitHubIcon, LinkedInIcon } from "@/components/primitives/icons";
 import { SITE } from "@/lib/site";
 
 export function Connect() {
@@ -33,22 +34,24 @@ export function Connect() {
         </Reveal>
 
         <Reveal delay={0.2}>
-          <div className="mt-8 flex gap-6">
+          <div className="mt-8 flex gap-4">
             <a
               href={SITE.social.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sm text-ink-faded transition-colors duration-200 hover:text-terracotta"
+              className="text-ink-faded transition-colors duration-200 hover:text-terracotta"
+              aria-label="GitHub"
             >
-              GitHub
+              <GitHubIcon className="h-5 w-5" />
             </a>
             <a
               href={SITE.social.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sm text-ink-faded transition-colors duration-200 hover:text-terracotta"
+              className="text-ink-faded transition-colors duration-200 hover:text-terracotta"
+              aria-label="LinkedIn"
             >
-              LinkedIn
+              <LinkedInIcon className="h-5 w-5" />
             </a>
           </div>
         </Reveal>

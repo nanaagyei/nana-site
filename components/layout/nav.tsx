@@ -4,7 +4,7 @@ import { useEffect, useState, useCallback } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { SITE } from "@/lib/site";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 const NAV_ITEMS = [
   { label: "projects", href: "/projects" },
@@ -86,28 +86,31 @@ export function Nav() {
           </Link>
 
           {/* Desktop nav */}
-          <ul className="hidden items-center gap-8 md:flex">
-            {NAV_ITEMS.map((item) => (
-              <li key={item.label}>
-                {item.href.startsWith("#") ? (
-                  <a
-                    href={pathname === "/" ? item.href : `/${item.href}`}
-                    className="text-sm tracking-wide text-ink-soft transition-colors duration-200 hover:text-ink"
-                    onClick={(e) => handleNavClick(e, item.href)}
-                  >
-                    {item.label}
-                  </a>
-                ) : (
-                  <Link
-                    href={item.href}
-                    className="text-sm tracking-wide text-ink-soft transition-colors duration-200 hover:text-ink"
-                  >
-                    {item.label}
-                  </Link>
-                )}
-              </li>
-            ))}
-          </ul>
+          <div className="hidden items-center gap-8 md:flex">
+            <ul className="flex items-center gap-8">
+              {NAV_ITEMS.map((item) => (
+                <li key={item.label}>
+                  {item.href.startsWith("#") ? (
+                    <a
+                      href={pathname === "/" ? item.href : `/${item.href}`}
+                      className="text-sm tracking-wide text-ink-soft transition-colors duration-200 hover:text-ink"
+                      onClick={(e) => handleNavClick(e, item.href)}
+                    >
+                      {item.label}
+                    </a>
+                  ) : (
+                    <Link
+                      href={item.href}
+                      className="text-sm tracking-wide text-ink-soft transition-colors duration-200 hover:text-ink"
+                    >
+                      {item.label}
+                    </Link>
+                  )}
+                </li>
+              ))}
+            </ul>
+            <ThemeToggle />
+          </div>
 
           {/* Mobile hamburger */}
           <button
@@ -173,6 +176,9 @@ export function Nav() {
             </li>
           ))}
         </ul>
+        <div className="mt-12">
+          <ThemeToggle />
+        </div>
       </div>
     </>
   );

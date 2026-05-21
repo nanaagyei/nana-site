@@ -3,6 +3,7 @@ import { Fraunces, Instrument_Sans, JetBrains_Mono } from "next/font/google";
 import { SmoothScrollProvider } from "@/components/layout/smooth-scroll-provider";
 import { Nav } from "@/components/layout/nav";
 import { Footer } from "@/components/layout/footer";
+import { ContactBubble } from "@/components/contact-bubble";
 import { SITE } from "@/lib/site";
 import "./globals.css";
 
@@ -92,7 +93,15 @@ export default function RootLayout({
     <html
       lang="en"
       className={`${fraunces.variable} ${instrumentSans.variable} ${jetbrainsMono.variable}`}
+      suppressHydrationWarning
     >
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.getItem("theme");if(t==="dark"||(t!=="light"&&matchMedia("(prefers-color-scheme:dark)").matches)){document.documentElement.classList.add("dark")}}catch(e){}})()`,
+          }}
+        />
+      </head>
       <body>
         <script
           type="application/ld+json"
@@ -121,6 +130,7 @@ export default function RootLayout({
           <Nav />
           <main>{children}</main>
           <Footer />
+          <ContactBubble />
         </SmoothScrollProvider>
       </body>
     </html>

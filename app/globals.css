@@ -18,6 +18,24 @@
   --selection:   oklch(0.65 0.14 75 / 0.25);
 }
 
+/* ─── Dark mode ─── */
+.dark {
+  --paper:       oklch(0.16 0.015 55);
+  --paper-deep:  oklch(0.13 0.012 55);
+  --paper-edge:  oklch(0.24 0.018 55);
+
+  --ink:         oklch(0.90 0.015 75);
+  --ink-soft:    oklch(0.75 0.015 70);
+  --ink-faded:   oklch(0.55 0.015 65);
+
+  --terracotta:  oklch(0.62 0.14 30);
+  --moss:        oklch(0.58 0.08 160);
+  --ochre:       oklch(0.72 0.14 75);
+
+  --ink-on-accent: oklch(0.14 0.01 55);
+  --selection:   oklch(0.62 0.14 30 / 0.25);
+}
+
 @theme inline {
   --color-paper:       var(--paper);
   --color-paper-deep:  var(--paper-deep);
@@ -63,6 +81,9 @@
 }
 
 /* ─── Base ─── */
+:root { color-scheme: light; }
+.dark { color-scheme: dark; }
+
 ::selection {
   background: var(--selection);
 }

@@ -8,8 +8,7 @@ export const profile = {
     github: "https://github.com/nanaagyei",
     linkedin: "https://linkedin.com/in/prince-agyei-tuffour",
   },
-  one_liner:
-    "Math-trained software engineer building open-source developer tools, learning ML/AI engineering in public.",
+  one_liner: "Open source · ML · Math · Software engineering",
   bio: [
     "Hey, I'm Prince — most people call me Nana. I'm a mathematician turned software engineer based in Austin. I love building things that help people think more clearly, whether that's a tool for debugging GPU memory or a platform connecting patients with healthcare.",
     "I studied math through a master's at Oregon State, and that way of thinking stuck with me — I care about understanding systems deeply, not just getting them to run. These days I work in software QA at dynaConnections and spend my evenings building open-source tools in the ML/AI space.",
