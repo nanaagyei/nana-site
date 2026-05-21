@@ -11,8 +11,21 @@ gsap.registerPlugin(ScrollTrigger);
 const NOW_DATA = {
   updated: "May 2026",
   reading: [
-    { title: "Deep Learning", author: "Ian Goodfellow, Yoshua Bengio & Aaron Courville" },
-    { title: "AI Engineering", author: "Chip Huyen" },
+    {
+      title: "Deep Learning",
+      author: "Ian Goodfellow, Yoshua Bengio & Aaron Courville",
+      href: "https://www.deeplearningbook.org",
+    },
+    {
+      title: "AI Engineering",
+      author: "Chip Huyen",
+      href: "https://www.oreilly.com/library/view/ai-engineering/9781098166698/",
+    },
+    {
+      title: "Designing Machine Learning Systems",
+      author: "Chip Huyen",
+      href: "https://www.oreilly.com/library/view/designing-machine-learning/9781098107967/",
+    },
   ],
   building: [
     {
@@ -29,9 +42,17 @@ const NOW_DATA = {
     },
   ],
   learning: [
-    { title: "GPU profiling and CUDA optimization" },
-    { title: "Deep learning fundamentals and theory" },
-    { title: "Low-level memory management for ML workloads" },
+    {
+      title: "GPU profiling and CUDA optimization",
+      book: "Programming Massively Parallel Processors by Wen-mei Hwu",
+      bookHref: "https://www.oreilly.com/library/view/programming-massively-parallel/9780323984638/",
+    },
+    { 
+      title: "Deep learning fundamentals and theory", 
+      book: "Deep Learning by Ian Goodfellow, Yoshua Bengio & Aaron Courville", 
+      bookHref: "https://www.deeplearningbook.org" 
+    },
+    { title: "ML Systems", book: "Machine Learning Systems by Vijay J. Reddi", bookHref: "https://mlsysbook.ai/index.html" },
   ],
 };
 
@@ -61,8 +82,17 @@ function ReadingContent() {
     <ul className="space-y-3">
       {NOW_DATA.reading.map((item) => (
         <li key={item.title}>
-          <span className="text-sm italic text-ink">{item.title}</span>
-          <span className="block text-xs text-ink-faded">{item.author}</span>
+          <a
+            href={item.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group"
+          >
+            <span className="text-sm italic text-ink transition-colors duration-200 group-hover:text-terracotta">
+              {item.title}
+            </span>
+            <span className="block text-xs text-ink-faded">{item.author}</span>
+          </a>
         </li>
       ))}
     </ul>
@@ -90,6 +120,16 @@ function LearningContent() {
       {NOW_DATA.learning.map((item) => (
         <li key={item.title}>
           <span className="text-sm text-ink">{item.title}</span>
+          {item.book && item.bookHref && (
+            <a
+              href={item.bookHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-0.5 block text-xs italic text-ink-faded transition-colors duration-200 hover:text-terracotta"
+            >
+              {item.book} →
+            </a>
+          )}
         </li>
       ))}
     </ul>
