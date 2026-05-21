@@ -14,17 +14,17 @@ const NOW_DATA = {
     {
       title: "Deep Learning",
       author: "Ian Goodfellow, Yoshua Bengio & Aaron Courville",
-      href: "https://aikosh.indiaai.gov.in/static/Deep+Learning+Ian+Goodfellow.pdf",
+      href: "https://www.deeplearningbook.org",
     },
     {
       title: "AI Engineering",
       author: "Chip Huyen",
-      href: "https://github.com/PratyushDS/AI-Books/blob/main/AI%20Engineering_%20Building%20Applications%20With%20Foundation%20Models%20by%20Chip%20Huyen%20(1).pdf",
+      href: "https://www.oreilly.com/library/view/ai-engineering/9781098166698/",
     },
     {
       title: "Designing Machine Learning Systems",
       author: "Chip Huyen",
-      href: "https://github.com/PratyushDS/AI-Books/blob/main/Designing%20Machine%20Learning%20Systems.pdf",
+      href: "https://www.oreilly.com/library/view/designing-machine-learning/9781098107967/",
     },
   ],
   building: [
@@ -45,12 +45,12 @@ const NOW_DATA = {
     {
       title: "GPU profiling and CUDA optimization",
       book: "Programming Massively Parallel Processors by Wen-mei Hwu",
-      bookHref: "https://github.com/h3ct0rjs/HighPerformanceComputing/blob/master/BookRef/Programming%20Massively%20Parallel%20Processors.pdf",
+      bookHref: "https://www.oreilly.com/library/view/programming-massively-parallel/9780323984638/",
     },
     { 
       title: "Deep learning fundamentals and theory", 
       book: "Deep Learning by Ian Goodfellow, Yoshua Bengio & Aaron Courville", 
-      bookHref: "https://aikosh.indiaai.gov.in/static/Deep+Learning+Ian+Goodfellow.pdf" 
+      bookHref: "https://www.deeplearningbook.org" 
     },
     { title: "ML Systems", book: "Machine Learning Systems by Vijay J. Reddi", bookHref: "https://mlsysbook.ai/index.html" },
   ],

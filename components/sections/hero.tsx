@@ -114,7 +114,7 @@ export function Hero() {
             strokeWidth="1.5"
             strokeLinecap="round"
             strokeLinejoin="round"
-            className="h-5 w-5 animate-bounce text-ink-faded/50"
+            className="h-5 w-5 motion-safe:animate-bounce text-ink-faded/50"
             aria-hidden="true"
           >
             <path d="M12 5v14" />

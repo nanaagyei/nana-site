@@ -196,6 +196,7 @@ export function ContactBubble() {
 
       {/* Chat panel */}
       <div
+        id="contact-panel"
         ref={panelRef}
         role="dialog"
         aria-label="Contact form"
