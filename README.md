@@ -5,7 +5,7 @@
 <h1 align="center">princeagyeituffour.com</h1>
 
 <p align="center">
-  Personal portfolio for Prince Agyei Tuffour. Math-trained software engineer building open-source developer tools and learning ML/AI engineering in public.
+  Personal portfolio for Prince Agyei Tuffour. Open source · ML · Math · Software engineering.
 </p>
 
 ---

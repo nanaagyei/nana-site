@@ -2,8 +2,7 @@ export const SITE = {
   name: "Prince Agyei Tuffour",
   mark: "nana",
   url: "https://princeagyeituffour.com",
-  description:
-    "Math-trained software engineer building open-source developer tools, learning ML/AI engineering in public.",
+  description: "Open source · ML · Math · Software engineering",
   social: {
     github: "https://github.com/nanaagyei",
     linkedin: "https://linkedin.com/in/prince-agyei-tuffour",
