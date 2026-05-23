@@ -4,6 +4,7 @@ import { getProjectBySlug, getProjects } from "@/lib/projects";
 import { Pill } from "@/components/primitives/pill";
 import { ProjectContent } from "./content";
 import type { Metadata } from "next";
+import { OG_IMAGE, socialImages } from "@/lib/metadata";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -26,6 +27,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: project.title,
       description: project.subtitle,
       type: "article",
+      images: socialImages,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: project.title,
+      description: project.subtitle,
+      images: [OG_IMAGE.url],
     },
     alternates: {
       canonical: `/projects/${slug}`,

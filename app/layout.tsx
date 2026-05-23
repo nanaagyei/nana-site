@@ -5,6 +5,7 @@ import { Nav } from "@/components/layout/nav";
 import { Footer } from "@/components/layout/footer";
 import { ContactBubble } from "@/components/contact-bubble";
 import { SITE } from "@/lib/site";
+import { defaultOpenGraph, defaultTwitter } from "@/lib/metadata";
 import "./globals.css";
 
 const fraunces = Fraunces({
@@ -46,19 +47,8 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: SITE.name, url: SITE.url }],
   creator: SITE.name,
-  openGraph: {
-    title: SITE.name,
-    description: SITE.description,
-    url: SITE.url,
-    siteName: SITE.mark,
-    locale: "en_US",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: SITE.name,
-    description: SITE.description,
-  },
+  openGraph: defaultOpenGraph,
+  twitter: defaultTwitter,
   robots: {
     index: true,
     follow: true,

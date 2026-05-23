@@ -4,6 +4,7 @@ import { getPostBySlug, getPosts } from "@/lib/writing";
 import { formatDateFull } from "@/lib/utils";
 import { ProjectContent } from "@/app/projects/[slug]/content";
 import type { Metadata } from "next";
+import { OG_IMAGE, socialImages } from "@/lib/metadata";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -27,6 +28,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: post.excerpt,
       type: "article",
       publishedTime: post.date,
+      images: socialImages,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.excerpt,
+      images: [OG_IMAGE.url],
     },
     alternates: {
       canonical: `/writing/${slug}`,
