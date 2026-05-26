@@ -1,0 +1,16 @@
+---
+slug: "accesslens"
+title: "AccessLens"
+subtitle: "On-device scene narrator for blind and low-vision users"
+year: 2026
+status: "shipped"
+role: "Creator"
+stack: ["Python", "FastAPI", "MLX", "YOLO26", "Next.js", "TypeScript", "React"]
+links:
+  github: "https://github.com/nanaagyei/accesslens"
+  site: "https://youtu.be/YFThk8kSvag"
+featured: false
+order: 5
+---
+
+AccessLens is a privacy-first assistive tool that narrates what your MacBook camera sees in real time — entirely on Apple Silicon, with zero cloud calls and no data leaving the device. Built for the webAI YOLO26 MLX Build Challenge in Austin, it captures webcam frames at 10 FPS, runs YOLO26 object detection via MLX on the GPU, maps detections into spatial zones (left/center/right, near/mid/far), and speaks context-aware descriptions through a priority-scored narration state machine that announces new objects, count changes, and scene transitions without spamming. The pipeline delivers sub-130ms detection-to-speech latency, with voice search, blind mode, proximity chimes, and on-demand full-scene summaries — proving that accessibility and on-device privacy do not have to be a tradeoff.
