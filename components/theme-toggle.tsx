@@ -7,7 +7,6 @@ type Theme = "light" | "dark";
 const STORAGE_KEY = "theme";
 
 function getSnapshot(): Theme {
-  if (typeof window === "undefined") return "light";
   const stored = localStorage.getItem(STORAGE_KEY) as Theme | null;
   if (stored === "dark" || stored === "light") return stored;
   return window.matchMedia("(prefers-color-scheme: dark)").matches
@@ -20,9 +19,7 @@ function getServerSnapshot(): Theme {
 }
 
 function subscribe(callback: () => void): () => void {
-  // Listen for storage changes (other tabs)
   window.addEventListener("storage", callback);
-  // Listen for system theme changes
   const mq = window.matchMedia("(prefers-color-scheme: dark)");
   mq.addEventListener("change", callback);
   return () => {
@@ -34,7 +31,6 @@ function subscribe(callback: () => void): () => void {
 export function ThemeToggle() {
   const theme = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 
-  // Apply the class whenever theme changes
   useEffect(() => {
     document.documentElement.classList.toggle("dark", theme === "dark");
   }, [theme]);
@@ -43,18 +39,12 @@ export function ThemeToggle() {
     const next: Theme = theme === "light" ? "dark" : "light";
     localStorage.setItem(STORAGE_KEY, next);
     document.documentElement.classList.toggle("dark", next === "dark");
-    // Dispatch storage event to trigger re-render via useSyncExternalStore
     window.dispatchEvent(new StorageEvent("storage", { key: STORAGE_KEY }));
   }, [theme]);
 
-  // Don't render icon on server — placeholder preserves layout
-  const isServer = typeof window === "undefined";
-  if (isServer) {
-    return <div className="h-8 w-8" />;
-  }
-
   return (
     <button
+      type="button"
       onClick={toggle}
       className="flex h-8 w-8 items-center justify-center rounded-sm text-ink-faded transition-colors duration-200 hover:text-ink"
       aria-label={`Switch to ${theme === "light" ? "dark" : "light"} mode`}
