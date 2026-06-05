@@ -329,6 +329,18 @@ code, pre {
   font-size: inherit;
 }
 
+.prose-custom code[data-theme*=" "],
+.prose-custom code[data-theme*=" "] span {
+  color: var(--shiki-light);
+  background-color: var(--shiki-light-bg);
+}
+
+.dark .prose-custom code[data-theme*=" "],
+.dark .prose-custom code[data-theme*=" "] span {
+  color: var(--shiki-dark);
+  background-color: var(--shiki-dark-bg);
+}
+
 /* ─── Reduced motion ─── */
 @media (prefers-reduced-motion: reduce) {
   *,

@@ -10,7 +10,10 @@ const processor = unified()
   .use(remarkGfm)
   .use(remarkRehype, { allowDangerousHtml: true })
   .use(rehypePrettyCode, {
-    theme: "github-light",
+    theme: {
+      light: "github-light",
+      dark: "github-dark-dimmed",
+    },
     keepBackground: false,
   })
   .use(rehypeStringify);
