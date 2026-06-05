@@ -254,6 +254,93 @@ code, pre {
   margin: 1.5rem 0;
 }
 
+.prose-custom .overflow-x-auto,
+.prose-custom table {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+  margin: 1.5rem 0;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.prose-custom th,
+.prose-custom td {
+  border: 1px solid var(--paper-edge);
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+  vertical-align: top;
+}
+
+.prose-custom th {
+  color: var(--ink);
+  font-weight: 600;
+  background: var(--paper-deep);
+}
+
+.prose-custom sup {
+  font-size: 0.75em;
+  line-height: 0;
+}
+
+.prose-custom sup a {
+  text-decoration: none;
+}
+
+.prose-custom .footnotes {
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--paper-edge);
+  font-size: 0.875rem;
+  color: var(--ink-faded);
+}
+
+.prose-custom .footnotes ol {
+  padding-left: 1.25rem;
+}
+
+.prose-custom .footnotes li {
+  margin-bottom: 0.5rem;
+}
+
+.prose-custom .footnotes .footnote-backref {
+  margin-left: 0.25rem;
+  text-decoration: none;
+}
+
+.prose-custom figure[data-rehype-pretty-code-figure] {
+  margin: 1.5rem 0;
+}
+
+.prose-custom figure[data-rehype-pretty-code-figure] pre {
+  margin: 0;
+  padding: 1rem 1.25rem;
+  background: var(--paper-deep);
+  border-radius: 4px;
+  overflow-x: auto;
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+.prose-custom figure[data-rehype-pretty-code-figure] code {
+  background: none;
+  padding: 0;
+  border-radius: 0;
+  font-size: inherit;
+}
+
+.prose-custom code[data-theme*=" "],
+.prose-custom code[data-theme*=" "] span {
+  color: var(--shiki-light);
+  background-color: var(--shiki-light-bg);
+}
+
+.dark .prose-custom code[data-theme*=" "],
+.dark .prose-custom code[data-theme*=" "] span {
+  color: var(--shiki-dark);
+  background-color: var(--shiki-dark-bg);
+}
+
 /* ─── Reduced motion ─── */
 @media (prefers-reduced-motion: reduce) {
   *,
