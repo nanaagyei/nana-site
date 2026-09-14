@@ -1,0 +1,6 @@
+export CI=true
+export NEXT_TELEMETRY_DISABLED=1
+pnpm lint
+pnpm typecheck
+pnpm audit --prod --audit-level=high
+pnpm build

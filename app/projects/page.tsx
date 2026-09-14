@@ -3,6 +3,7 @@ import { getProjects } from "@/lib/projects";
 import { Reveal } from "@/components/primitives/reveal";
 import { Pill } from "@/components/primitives/pill";
 import { GitHubIcon, ExternalLinkIcon } from "@/components/primitives/icons";
+import { ProjectCover } from "@/components/primitives/project-cover";
 import { renderMarkdown } from "@/lib/markdown";
 import type { Metadata } from "next";
 
@@ -48,68 +49,96 @@ export default async function ProjectsPage() {
           </div>
         </Reveal>
 
-        <div className="space-y-12">
+        <div className="space-y-14">
           {projectsWithHtml.map((project, i) => (
             <Reveal key={project.slug} delay={i * 0.04}>
-              <div className="border-t border-paper-edge pt-10 first:border-t-0 first:pt-0">
-                <div className="flex items-start justify-between gap-4">
+              <article
+                className={
+                  i === 0
+                    ? "pt-0"
+                    : "border-t border-paper-edge pt-10"
+                }
+              >
+                <div className="grid items-start gap-6 md:grid-cols-[minmax(0,280px)_1fr] md:gap-8">
+                  <Link
+                    href={`/projects/${project.slug}`}
+                    className="relative aspect-16/10 overflow-hidden rounded-sm md:aspect-4/3"
+                  >
+                    <ProjectCover
+                      src={project.cover}
+                      alt={`${project.title} screenshot`}
+                      sizes="(min-width: 768px) 280px, 100vw"
+                      priority={i === 0}
+                      className="h-full w-full"
+                    />
+                  </Link>
+
                   <div>
-                    <h2
-                      className="font-display text-xl font-normal tracking-tight"
-                      style={{
-                        fontVariationSettings:
-                          "'opsz' 48, 'SOFT' 60, 'WONK' 1",
-                      }}
-                    >
-                      {project.title}
-                    </h2>
-                    <p className="mt-1 text-sm text-ink-faded">
-                      {project.subtitle}
-                    </p>
-                  </div>
-                  <div className="flex shrink-0 items-center gap-3 pt-1">
-                    {project.links?.github && (
-                      <a
-                        href={project.links.github}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-ink-faded transition-colors duration-200 hover:text-ink"
-                        aria-label={`${project.title} on GitHub`}
-                      >
-                        <GitHubIcon />
-                      </a>
-                    )}
-                    {project.links?.site && (
-                      <a
-                        href={project.links.site}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-ink-faded transition-colors duration-200 hover:text-terracotta"
-                        aria-label={`${project.title} live site`}
-                      >
-                        <ExternalLinkIcon />
-                      </a>
-                    )}
+                    <div className="flex items-start justify-between gap-4">
+                      <div>
+                        <h2
+                          className="font-display text-xl font-normal tracking-tight"
+                          style={{
+                            fontVariationSettings:
+                              "'opsz' 48, 'SOFT' 60, 'WONK' 1",
+                          }}
+                        >
+                          <Link
+                            href={`/projects/${project.slug}`}
+                            className="transition-colors duration-200 hover:text-terracotta"
+                          >
+                            {project.title}
+                          </Link>
+                        </h2>
+                        <p className="mt-1 text-sm text-ink-faded">
+                          {project.subtitle}
+                        </p>
+                      </div>
+                      <div className="flex shrink-0 items-center gap-3 pt-1">
+                        {project.links?.github && (
+                          <a
+                            href={project.links.github}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-ink-faded transition-colors duration-200 hover:text-ink"
+                            aria-label={`${project.title} on GitHub`}
+                          >
+                            <GitHubIcon />
+                          </a>
+                        )}
+                        {project.links?.site && (
+                          <a
+                            href={project.links.site}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-ink-faded transition-colors duration-200 hover:text-terracotta"
+                            aria-label={`${project.title} live site`}
+                          >
+                            <ExternalLinkIcon />
+                          </a>
+                        )}
+                      </div>
+                    </div>
+
+                    <div
+                      className="mt-4 text-sm leading-[1.7] text-ink-soft"
+                      dangerouslySetInnerHTML={{ __html: project.html }}
+                    />
+
+                    <div className="mt-4 flex flex-wrap items-center gap-1.5">
+                      {project.stack.map((tech) => (
+                        <Pill key={tech} variant="moss">
+                          {tech}
+                        </Pill>
+                      ))}
+                      <Pill>{project.year}</Pill>
+                      <span className="ml-2 font-mono text-xs text-ink-faded">
+                        {project.role}
+                      </span>
+                    </div>
                   </div>
                 </div>
-
-                <div
-                  className="mt-4 text-sm leading-[1.7] text-ink-soft"
-                  dangerouslySetInnerHTML={{ __html: project.html }}
-                />
-
-                <div className="mt-4 flex flex-wrap items-center gap-1.5">
-                  {project.stack.map((tech) => (
-                    <Pill key={tech} variant="moss">
-                      {tech}
-                    </Pill>
-                  ))}
-                  <Pill>{project.year}</Pill>
-                  <span className="ml-2 font-mono text-xs text-ink-faded">
-                    {project.role}
-                  </span>
-                </div>
-              </div>
+              </article>
             </Reveal>
           ))}
         </div>

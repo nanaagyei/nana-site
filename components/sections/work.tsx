@@ -2,13 +2,13 @@
 
 import { useRef } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { Reveal } from "@/components/primitives/reveal";
 import { Pill } from "@/components/primitives/pill";
 import { GitHubIcon, ExternalLinkIcon } from "@/components/primitives/icons";
+import { ProjectCover } from "@/components/primitives/project-cover";
 import { cn } from "@/lib/utils";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -51,90 +51,25 @@ const FEATURED: FeaturedProject[] = [
     image: "/images/projects/regexlens.png",
   },
   {
-    slug: "guidr",
-    title: "Guidr",
-    subtitle: "AI-powered graduate school discovery platform",
-    year: 2026,
-    stack: ["FastAPI", "Next.js", "PostgreSQL"],
-    github: "https://github.com/nanaagyei/guidr",
-    image: "/images/projects/guidr.png",
+    slug: "nkwapa",
+    title: "Nkwapa",
+    subtitle: "Offline-first EMR for hypertension and diabetes programs",
+    year: 2024,
+    stack: ["React", "Node.js", "PostgreSQL"],
+    github: "",
+    site: "https://staging.nkwapa.app",
+    image: "/images/projects/nkwapa.png",
   },
   {
-    slug: "gatewise",
-    title: "Gatewise",
-    subtitle: "Intelligent airport navigation for travelers",
+    slug: "akomapa-academy",
+    title: "Akomapa Academy",
+    subtitle: "Global health education and leadership for student clinicians",
     year: 2026,
-    stack: ["TypeScript", "React Native", "Supabase"],
+    stack: ["Next.js", "TypeScript", "React"],
     github: "",
-    image: "/images/projects/gatewise.png",
+    site: "https://academy.akomapa.org",
+    image: "/images/projects/akomapa-academy.png",
   },
-];
-
-// Abstract SVG patterns for project cover placeholders
-const PATTERNS = [
-  // Concentric circles
-  (
-    <svg viewBox="0 0 200 200" className="h-full w-full" aria-hidden="true" key="p0">
-      <circle cx="100" cy="100" r="80" fill="none" stroke="currentColor" strokeWidth="0.5" opacity="0.15" />
-      <circle cx="100" cy="100" r="60" fill="none" stroke="currentColor" strokeWidth="0.5" opacity="0.12" />
-      <circle cx="100" cy="100" r="40" fill="none" stroke="currentColor" strokeWidth="0.5" opacity="0.09" />
-      <circle cx="100" cy="100" r="20" fill="none" stroke="currentColor" strokeWidth="1" opacity="0.06" />
-    </svg>
-  ),
-  // Grid dots
-  (
-    <svg viewBox="0 0 200 200" className="h-full w-full" aria-hidden="true" key="p1">
-      {Array.from({ length: 8 }).map((_, row) =>
-        Array.from({ length: 8 }).map((_, col) => (
-          <circle
-            key={`${row}-${col}`}
-            cx={25 + col * 22}
-            cy={25 + row * 22}
-            r="1.5"
-            fill="currentColor"
-            opacity={0.06 + (row + col) * 0.008}
-          />
-        ))
-      )}
-    </svg>
-  ),
-  // Diagonal lines
-  (
-    <svg viewBox="0 0 200 200" className="h-full w-full" aria-hidden="true" key="p2">
-      {Array.from({ length: 12 }).map((_, i) => (
-        <line
-          key={i}
-          x1={-20 + i * 22}
-          y1="0"
-          x2={-20 + i * 22 + 200}
-          y2="200"
-          stroke="currentColor"
-          strokeWidth="0.5"
-          opacity={0.06 + i * 0.006}
-        />
-      ))}
-    </svg>
-  ),
-  // Hexagonal pattern
-  (
-    <svg viewBox="0 0 200 200" className="h-full w-full" aria-hidden="true" key="p3">
-      {[
-        [100, 60], [60, 85], [140, 85], [60, 115], [140, 115], [100, 140],
-      ].map(([cx, cy], i) => (
-        <polygon
-          key={i}
-          points={Array.from({ length: 6 }).map((_, j) => {
-            const angle = (Math.PI / 3) * j - Math.PI / 6;
-            return `${(cx ?? 0) + 18 * Math.cos(angle)},${(cy ?? 0) + 18 * Math.sin(angle)}`;
-          }).join(" ")}
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="0.5"
-          opacity={0.08 + i * 0.01}
-        />
-      ))}
-    </svg>
-  ),
 ];
 
 function FeaturedCard({
@@ -183,37 +118,27 @@ function FeaturedCard({
           isWide ? "col-span-full md:col-span-2" : "col-span-full md:col-span-1"
         )}
       >
-        {/* Cover */}
         {(() => {
-          const coverContent = project.image ? (
-            <Image
-              src={project.image}
-              alt={`${project.title} screenshot`}
-              fill
-              sizes={isWide ? "(min-width: 768px) 66vw, 100vw" : "(min-width: 768px) 50vw, 100vw"}
-              className="object-cover object-top will-change-transform"
-            />
-          ) : (
-            <div
-              ref={imageRef}
-              className="absolute inset-0 flex items-center justify-center will-change-transform"
-            >
-              <div className="h-3/4 w-3/4">
-                {PATTERNS[index % PATTERNS.length]}
-              </div>
-            </div>
-          );
-
           const wrapper = (
-            <div className="relative mb-4 overflow-hidden rounded-sm bg-paper-deep text-ink-faded">
+            <div className="relative mb-4 overflow-hidden rounded-sm bg-paper-deep">
               <div
-                ref={project.image ? imageRef : undefined}
+                ref={imageRef}
                 className={cn(
-                  "relative",
+                  "relative will-change-transform",
                   isWide ? "aspect-video" : "aspect-4/3"
                 )}
               >
-                {coverContent}
+                <ProjectCover
+                  src={project.image}
+                  alt={`${project.title} screenshot`}
+                  sizes={
+                    isWide
+                      ? "(min-width: 768px) 66vw, 100vw"
+                      : "(min-width: 768px) 50vw, 100vw"
+                  }
+                  priority={index === 0}
+                  className="h-full w-full"
+                />
               </div>
             </div>
           );
