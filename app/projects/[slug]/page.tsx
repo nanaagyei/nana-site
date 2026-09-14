@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { getProjectBySlug, getProjects } from "@/lib/projects";
 import { Pill } from "@/components/primitives/pill";
+import { ProjectCover } from "@/components/primitives/project-cover";
 import { ProjectContent } from "./content";
 import type { Metadata } from "next";
 import { OG_IMAGE, socialImages } from "@/lib/metadata";
@@ -60,6 +61,15 @@ export default async function ProjectPage({ params }: Props) {
 
         {/* Header */}
         <header className="mb-12">
+          <div className="relative mb-8 aspect-16/10 overflow-hidden rounded-sm">
+            <ProjectCover
+              src={project.cover}
+              alt={`${project.title} screenshot`}
+              sizes="(min-width: 768px) 680px, 100vw"
+              priority
+              className="h-full w-full"
+            />
+          </div>
           <h1
             className="font-display text-3xl font-normal tracking-tight sm:text-4xl"
             style={{
