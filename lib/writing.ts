@@ -55,3 +55,18 @@ export function getPosts(): Post[] {
 export function getPostBySlug(slug: string): Post | undefined {
   return getPosts().find((p) => p.slug === slug);
 }
+
+export function getPostNav(slug: string) {
+  const posts = getPosts();
+  const index = posts.findIndex((p) => p.slug === slug);
+
+  if (index === -1) {
+    return { suggested: [] as Post[], previous: null, next: null };
+  }
+
+  return {
+    previous: posts[index + 1] ?? null,
+    next: posts[index - 1] ?? null,
+    suggested: posts.filter((p) => p.slug !== slug).slice(0, 3),
+  };
+}

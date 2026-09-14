@@ -1,8 +1,9 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { getPostBySlug, getPosts } from "@/lib/writing";
+import { getPostBySlug, getPostNav, getPosts } from "@/lib/writing";
 import { formatDateFull } from "@/lib/utils";
 import { ProjectContent } from "@/app/projects/[slug]/content";
+import { PostNav } from "@/components/writing/post-nav";
 import type { Metadata } from "next";
 import { OG_IMAGE, socialImages } from "@/lib/metadata";
 
@@ -48,6 +49,8 @@ export default async function PostPage({ params }: Props) {
 
   if (!post) notFound();
 
+  const { suggested, previous, next } = getPostNav(slug);
+
   return (
     <article className="px-4 pt-32 pb-16 sm:px-6">
       <div className="mx-auto max-w-[680px]">
@@ -74,6 +77,8 @@ export default async function PostPage({ params }: Props) {
         </header>
 
         <ProjectContent content={post.content} />
+
+        <PostNav suggested={suggested} previous={previous} next={next} />
       </div>
     </article>
   );
