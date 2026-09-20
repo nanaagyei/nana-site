@@ -10,6 +10,7 @@ const postSchema = z.object({
   date: z.string(),
   excerpt: z.string(),
   published: z.boolean().default(true),
+  companionSlug: z.string().optional(),
 });
 
 export type Post = z.infer<typeof postSchema> & {
@@ -47,9 +48,12 @@ export function getPosts(): Post[] {
     .filter((p): p is Post => p !== null)
     .filter((p) => p.published);
 
-  return posts.sort(
-    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-  );
+  return posts.sort((a, b) => {
+    const dateDiff =
+      new Date(b.date).getTime() - new Date(a.date).getTime();
+    if (dateDiff !== 0) return dateDiff;
+    return b.title.localeCompare(a.title);
+  });
 }
 
 export function getPostBySlug(slug: string): Post | undefined {
@@ -61,12 +65,39 @@ export function getPostNav(slug: string) {
   const index = posts.findIndex((p) => p.slug === slug);
 
   if (index === -1) {
-    return { suggested: [] as Post[], previous: null, next: null };
+    return {
+      suggested: [] as Post[],
+      previous: null,
+      next: null,
+      companion: null,
+    };
   }
+
+  const current = posts[index];
+  if (!current) {
+    return {
+      suggested: [] as Post[],
+      previous: null,
+      next: null,
+      companion: null,
+    };
+  }
+
+  const companion = current.companionSlug
+    ? (posts.find((p) => p.slug === current.companionSlug) ?? null)
+    : null;
+
+  const suggested = [
+    ...(companion ? [companion] : []),
+    ...posts.filter(
+      (p) => p.slug !== slug && p.slug !== companion?.slug
+    ),
+  ].slice(0, 3);
 
   return {
     previous: posts[index + 1] ?? null,
     next: posts[index - 1] ?? null,
-    suggested: posts.filter((p) => p.slug !== slug).slice(0, 3),
+    suggested,
+    companion,
   };
 }
