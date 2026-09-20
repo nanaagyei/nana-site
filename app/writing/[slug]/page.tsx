@@ -49,7 +49,7 @@ export default async function PostPage({ params }: Props) {
 
   if (!post) notFound();
 
-  const { suggested, previous, next } = getPostNav(slug);
+  const { suggested, previous, next, companion } = getPostNav(slug);
 
   return (
     <article className="px-4 pt-32 pb-16 sm:px-6">
@@ -74,6 +74,17 @@ export default async function PostPage({ params }: Props) {
             <time dateTime={post.date}>{formatDateFull(post.date)}</time>
             <span>{post.readingTime}</span>
           </div>
+          {companion ? (
+            <p className="mt-5 text-sm text-ink-faded">
+              Companion piece:{" "}
+              <Link
+                href={`/writing/${companion.slug}`}
+                className="text-terracotta underline decoration-transparent underline-offset-2 transition-colors duration-200 hover:text-ink hover:decoration-current"
+              >
+                {companion.title}
+              </Link>
+            </p>
+          ) : null}
         </header>
 
         <ProjectContent content={post.content} />

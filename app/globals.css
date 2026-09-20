@@ -234,6 +234,9 @@ code, pre {
   overflow-x: auto;
   font-size: 0.875rem;
   line-height: 1.6;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .prose-custom pre code {
@@ -249,9 +252,33 @@ code, pre {
 }
 
 .prose-custom img {
+  display: block;
+  width: 100%;
   max-width: 100%;
   border-radius: 4px;
   margin: 1.5rem 0;
+}
+
+.prose-custom figure {
+  width: 100%;
+  max-width: 100%;
+  margin: 2rem 0;
+}
+
+.prose-custom figure img {
+  display: block;
+  width: 100%;
+  margin: 0;
+  box-sizing: border-box;
+  border: 1px solid var(--paper-edge);
+}
+
+.prose-custom figcaption {
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--ink-faded);
+  font-style: italic;
 }
 
 .prose-custom .overflow-x-auto,
@@ -308,7 +335,51 @@ code, pre {
   text-decoration: none;
 }
 
+.prose-custom .mermaid-figure {
+  padding: 1.25rem 0.75rem 1rem;
+  background: var(--paper-deep);
+  border: 1px solid var(--paper-edge);
+  border-radius: 4px;
+  overflow-x: auto;
+}
+
+.prose-custom .mermaid-diagram {
+  min-height: 6rem;
+}
+
+.prose-custom .mermaid-diagram svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin-inline: auto;
+}
+
+.prose-custom .mermaid-diagram .nodeLabel,
+.prose-custom .mermaid-diagram .cluster-label,
+.prose-custom .mermaid-diagram .edgeLabel {
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-size: 0.8125rem;
+}
+
+.prose-custom .mermaid-error {
+  margin: 0;
+  padding: 0;
+  background: none;
+  border: none;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--ink-faded);
+  white-space: pre-wrap;
+}
+
+.prose-custom li input[type="checkbox"] {
+  margin-right: 0.5rem;
+  accent-color: var(--terracotta);
+}
+
 .prose-custom figure[data-rehype-pretty-code-figure] {
+  width: 100%;
+  max-width: 100%;
   margin: 1.5rem 0;
 }
 
