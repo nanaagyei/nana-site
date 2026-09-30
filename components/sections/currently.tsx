@@ -19,14 +19,25 @@ export function Currently() {
         </Reveal>
 
         <div className="grid min-w-0 gap-12 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)] lg:gap-16 lg:items-start">
-          <Reveal className="min-w-0">
-            <div>
-              <h3 className="mb-4 font-display text-lg font-normal tracking-tight text-ink">
-                Reading
-              </h3>
-              <Bookshelf books={NOW.reading} />
-            </div>
-          </Reveal>
+          <div className="grid min-w-0 gap-12">
+            <Reveal className="min-w-0">
+              <div>
+                <h3 className="mb-4 font-display text-lg font-normal tracking-tight text-ink">
+                  Reading
+                </h3>
+                <Bookshelf books={NOW.reading} />
+              </div>
+            </Reveal>
+
+            <Reveal className="min-w-0" delay={0.05}>
+              <div>
+                <h3 className="mb-4 font-display text-lg font-normal tracking-tight text-ink">
+                  Previously read
+                </h3>
+                <Bookshelf books={NOW.previouslyRead} />
+              </div>
+            </Reveal>
+          </div>
 
           <div className="grid min-w-0 gap-12 sm:grid-cols-2 lg:grid-cols-1">
             <Reveal delay={0.06}>
@@ -61,15 +72,6 @@ export function Currently() {
             </Reveal>
           </div>
         </div>
-
-        <Reveal delay={0.14}>
-          <div className="mt-12">
-            <h3 className="mb-4 font-display text-lg font-normal tracking-tight text-ink">
-              Previously read
-            </h3>
-            <Bookshelf books={NOW.previouslyRead} />
-          </div>
-        </Reveal>
       </div>
     </section>
   );
