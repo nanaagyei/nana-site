@@ -61,6 +61,15 @@ export function Currently() {
             </Reveal>
           </div>
         </div>
+
+        <Reveal delay={0.14}>
+          <div className="mt-12">
+            <h3 className="mb-4 font-display text-lg font-normal tracking-tight text-ink">
+              Previously read
+            </h3>
+            <Bookshelf books={NOW.previouslyRead} />
+          </div>
+        </Reveal>
       </div>
     </section>
   );

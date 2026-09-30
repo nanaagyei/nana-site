@@ -27,6 +27,15 @@ type FeaturedProject = {
 
 const FEATURED: FeaturedProject[] = [
   {
+    slug: "noetherkin",
+    title: "Noetherkin",
+    subtitle: "Agent-agnostic apprenticeship protocol and CLI for learning engineering inside real codebases",
+    year: 2026,
+    stack: ["TypeScript", "Node.js", "CLI", "Agent Skills"],
+    github: "https://github.com/nanaagyei/noetherkin",
+    image: "/noetherkin-images/noetherkin-hero.png",
+  },
+  {
     slug: "stormlog",
     title: "Stormlog",
     subtitle: "GPU memory profiling for PyTorch & TensorFlow",
