@@ -224,6 +224,7 @@ code, pre {
   padding: 0.15em 0.35em;
   border-radius: 3px;
   color: var(--ink);
+  overflow-wrap: anywhere;
 }
 
 .prose-custom pre {
