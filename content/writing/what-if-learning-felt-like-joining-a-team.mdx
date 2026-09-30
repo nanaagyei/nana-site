@@ -2,10 +2,12 @@
 slug: "what-if-learning-felt-like-joining-a-team"
 title: "What If Learning Software Engineering Felt Like Joining a Real Team?"
 date: "2026-09-20"
-excerpt: "Watching someone build software is not the same as learning how to work inside software. I started building noetherkin to make learning engineering feel more like joining a real team."
+excerpt: "Watching someone build software is not the same as learning how to work inside software. I started building noetherkin to make learning engineering feel more like joining a real team. Updated for noetherkin's current CLI and skills architecture."
 published: true
 companionSlug: "noetherkin-architecture-notes"
 ---
+
+*A note before this one: noetherkin has moved a lot since I first wrote it, from a private concept sketch to a public, released CLI. The motivation below is unchanged, but some of the mechanics are not: the five roles I describe became 21 separate, installable Agent Skills, and a trusted local CLI now mediates everything instead of a chat session. The [companion piece](/writing/noetherkin-architecture-notes) covers the current architecture in two parts.*
 
 I've been thinking a lot lately about how I want to keep learning software engineering.
 
@@ -21,7 +23,7 @@ And working inside software is increasingly what I want to get better at. I don'
 
 In short, I want the experience to feel less like another programming course and more like joining an engineering team.
 
-That thought turned into an open source project I've started building, called **noetherkin**: a simulation environment for learning software engineering by working inside real codebases.
+That thought turned into an open source project I've started building, called **noetherkin**: an agent-agnostic apprenticeship protocol and CLI for learning software engineering by working inside real codebases. It's public now, released under Apache 2.0, currently at v0.2.0.
 
 <figure>
   <img src="/noetherkin-images/noetherkin.png" alt="Overview of NoetherKin: a learner at the center, an AI engineering team on one side, and real open source projects on the other, with a step-by-step learner journey underneath." />
@@ -62,7 +64,7 @@ That became one of the central rules behind noetherkin: **the learner stays the 
 
 Instead of building toy projects specifically for the simulator, noetherkin uses existing open source software as the training ground.
 
-Say you want to learn Java and Spring. Instead of spending weeks on isolated tutorial projects, you'd fork something like [Spring PetClinic Microservices](https://github.com/spring-projects/spring-petclinic), and the simulator treats you like a developer who just joined the team.
+Say you want to learn Java and Spring. Instead of spending weeks on isolated tutorial projects, you'd run `noetherkin project select spring-petclinic-microservices --clone-to spring-petclinic`, which clones [Spring PetClinic Microservices](https://github.com/spring-projects/spring-petclinic) into your workspace after you confirm, pinned to a specific commit, and the simulator treats you like a developer who just joined the team. If you'd rather build something from nothing than inherit someone else's repository, noetherkin also ships "forge" projects, specifications for real software (an accessible data table, an eval ledger, a batch ingestion pipeline) that you implement yourself in an empty directory, with nothing cloned and nothing to diff your answer against.
 
 You'd start with something like: *welcome to the team. Before touching production code, let's understand what this product does, how to run it, and how a single request travels through the system.* Then you'd explore the repo, piece by piece rather than all at once, until eventually you get your first real assignment. Maybe something like:
 
@@ -85,7 +87,7 @@ The point is that learning happens through repeated cycles of real engineering w
 
 ## The company simulation
 
-The whole thing is built around a simple idea: different AI skills play different roles in an engineering organization.
+The whole thing is built around a simple idea: different AI skills play different roles in an engineering organization. That idea now ships as 21 separate, installable [Agent Skills](https://agentskills.io/specification), because once I actually built the thing, task assignment, teaching, code review, design review, debugging, incident response, performance review, and promotion review all turned out to need their own contracts, not just their own persona. They install into Claude Code or Codex with one command, and a trusted local CLI, not the chat session, is what actually owns and publishes any of it.
 
 <figure>
   <img src="/noetherkin-images/team-roles.png" alt="Diagram of NoetherKin engineering team roles around the learner: manager, team lead, peer engineer, teaching mentor, and user agent." />
@@ -153,7 +155,7 @@ More importantly, moving up a level should require evidence, not a single lucky 
 
 ## Real open source projects as the curriculum
 
-This might be the part I'm most excited about. Rather than inventing a separate toy repo for every skill, the roadmap leans on real, existing open source projects. Early on that might mean [Spring PetClinic Microservices](https://github.com/spring-projects/spring-petclinic) or [MLflow](https://github.com/mlflow/mlflow). For distributed and cloud native systems, the [OpenTelemetry demo](https://github.com/open-telemetry/opentelemetry-demo) app or Google's [Online Boutique](https://github.com/googlecloudplatform/microservices-demo). For ML systems, [KServe](https://github.com/kserve/kserve) and [vLLM](https://github.com/vllm-project/vllm). For systems programming, [OpenTelemetry's C++ SDK](https://github.com/open-telemetry/opentelemetry-cpp) and [llama.cpp](https://github.com/ggml-org/llama.cpp). For infrastructure, [Prometheus](https://github.com/prometheus/prometheus), [Argo CD](https://github.com/argoproj/argo-cd), and [etcd](https://github.com/etcd-io/etcd). Further out, things like [Triton](https://github.com/triton-lang/triton) and larger GPU inference platforms.
+This might be the part I'm most excited about. Rather than inventing a separate toy repo for every skill, the catalog leans on real, existing open source projects, 87 of them now, organized into 34 learning tracks: [Spring PetClinic Microservices](https://github.com/spring-projects/spring-petclinic) or [MLflow](https://github.com/mlflow/mlflow) early on. For distributed and cloud native systems, the [OpenTelemetry demo](https://github.com/open-telemetry/opentelemetry-demo) app. For ML systems, [KServe](https://github.com/kserve/kserve) and [vLLM](https://github.com/vllm-project/vllm). For systems programming, [OpenTelemetry's C++ SDK](https://github.com/open-telemetry/opentelemetry-cpp) and [llama.cpp](https://github.com/ggml-org/llama.cpp). For infrastructure, [Prometheus](https://github.com/prometheus/prometheus), [Argo CD](https://github.com/argoproj/argo-cd), and [etcd](https://github.com/etcd-io/etcd). Further out, things like [Triton](https://github.com/triton-lang/triton) and larger GPU inference platforms. Early on, before a learner is ready to inherit a real codebase's constraints, the seven built-from-empty "forge" projects carry the same first two or three levels instead: you write every line yourself against a shipped specification and acceptance criteria, with no upstream repository to lean on.
 
 <figure>
   <img src="/noetherkin-images/learning-path.png" alt="Example learning paths for backend engineering, ML systems, and systems/GPU work, each built from a sequence of real open source projects." />
@@ -185,9 +187,16 @@ Any single task might only take a few hours. But repeat that cycle hundreds of t
 
 ## How the workspace is laid out
 
-One design goal is keeping the simulator cleanly separate from the actual open source repo, so the code you're contributing to stays untouched by simulation state. Roughly:
+One design goal is keeping the simulator cleanly separate from the actual open source repo, so the code you're contributing to stays untouched by simulation state. In practice that now looks like this:
 
-A workspace folder holds an instructions file for the AI, a hidden `.apprenticeship` folder containing your profile, your competencies, your work in progress, past reviews, recorded evidence, and notes on the codebase, and then a `source` folder that holds your actual fork of the real project. That separation means the upstream repository stays clean enough to genuinely contribute back to.
+```text
+~/apprenticeship/                      your workspace: open your agent here
+├── .apprenticeship/                   your record; only the CLI writes it
+├── accessible-data-table/             a forge project: your own new Git repository
+└── spring-petclinic-microservices/    an open-source clone, if you attach one
+```
+
+A hidden `.apprenticeship/` folder holds your profile, your competencies, your work in progress, past reviews, and recorded evidence, and every project you attach or build, cloned or forge, sits beside it as its own clean folder. Noetherkin never gets installed into the project itself. That separation means the upstream repository stays clean enough to genuinely contribute back to, and one workspace can carry you through several projects in a row without your record splintering across them.
 
 <figure>
   <img src="/noetherkin-images/workspace-architecture.png" alt="Workspace layout showing a project folder split into a private .apprenticeship directory and a clean source repository." />
@@ -207,7 +216,7 @@ noetherkin tries to fix that by giving each role an explicit contract. A manager
 
 ## Built to work with any AI tool
 
-Portability matters to me too. I don't want this to only work inside one specific AI coding product. The underlying design uses plain, portable building blocks: Markdown, YAML, JSON, versioned schemas, and open agent instructions, so the core doesn't care whether you're using Codex, Claude Code, Cursor, Gemini CLI, Windsurf, or something that doesn't exist yet. A given tool might offer a nicer integration, like typing `/onboarding` directly, while another might just let you say "use the onboarding skill." Either way, the underlying behavior stays the same.
+Portability matters to me too. I don't want this to only work inside one specific AI coding product. The underlying design uses plain, portable building blocks: Markdown, YAML, JSON, versioned schemas, and open agent instructions, so the core doesn't care whether you're using Codex or Claude Code today, or something else tomorrow. That's no longer just intent: `noetherkin skills install` installs the same 21 skill bundles into `~/.claude/skills` and `~/.agents/skills`, and generic, Codex, and Claude Code capability adapters project the same portable capability, like onboarding, into each host's own invocation surface, `/onboarding` in one, `$onboarding` in the other. Either way, the underlying behavior stays the same, and anything that actually changes your record still has to go through the CLI and a confirmation you type yourself.
 
 <figure>
   <img src="/noetherkin-images/agent-agnostic.png" alt="Three-layer diagram of NoetherKin core, portable skills and contracts, and adapters for coding agents such as Claude, Cursor, and Gemini." />
@@ -256,8 +265,8 @@ This started from a fairly selfish problem: I wanted a better way to learn, and 
 
 The architecture will keep changing. Some of what's in this post will probably turn out to be wrong, some pieces will disappear entirely, and others will show up once I actually start using this seriously myself. That's fine. The goal right now isn't to pretend this is finished. It's to build something that makes getting better at engineering the actual point, instead of just producing more code faster. If it ends up helping other people do the same, even better.
 
-**GitHub:** [github.com/nanaagyei/noetherkin](https://github.com/nanaagyei/noetherkin) — still private while I clear up a couple of things with GitHub Support, but it'll be public soon, followed by a first npm package.
-**Status:** early, active development, pre-release.
-**Documentation:** coming once the repo goes public.
+**GitHub:** [github.com/nanaagyei/noetherkin](https://github.com/nanaagyei/noetherkin) — public, with releases, CI, and CodeQL running on every change.
+**Status:** early (0.x), actively developed, v0.2.0 released, wire protocol 3.0.
+**Install:** `npm install -g https://github.com/nanaagyei/noetherkin/releases/latest/download/noetherkin.tgz`, then `noetherkin setup`. It isn't on the npm registry on purpose; see the [architecture notes](/writing/noetherkin-architecture-notes) for why.
 
 I'll keep writing about the architecture, the mistakes, and what I learn as I actually build and use this.
