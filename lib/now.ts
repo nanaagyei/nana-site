@@ -1,35 +1,100 @@
+export type BookSpine = "terracotta" | "moss" | "ochre" | "ink";
+
+export type ReadingBook = {
+  title: string;
+  author: string;
+  href: string;
+  cover: string;
+  spine: BookSpine;
+};
+
+const reading: ReadingBook[] = [
+  {
+    title: "Deep Learning",
+    author: "Ian Goodfellow, Yoshua Bengio & Aaron Courville",
+    href: "https://www.deeplearningbook.org",
+    cover: "/images/books/deep-learning.jpg",
+    spine: "ink",
+  },
+  {
+    title: "AI Engineering",
+    author: "Chip Huyen",
+    href: "https://www.oreilly.com/library/view/ai-engineering/9781098166298/",
+    cover: "/images/books/ai-engineering.jpg",
+    spine: "terracotta",
+  },
+  {
+    title: "Designing Machine Learning Systems",
+    author: "Chip Huyen",
+    href: "https://www.oreilly.com/library/view/designing-machine-learning/9781098107956/",
+    cover: "/images/books/designing-ml-systems.jpg",
+    spine: "moss",
+  },
+  {
+    title: "Linear Algebra and Learning from Data",
+    author: "Gilbert Strang",
+    href: "https://math.mit.edu/~gs/learningfromdata/",
+    cover: "/images/books/strang-linear-algebra.jpg",
+    spine: "ochre",
+  },
+  {
+    title: "Red Rising",
+    author: "Pierce Brown",
+    href: "https://www.pierce-brown.com/red-rising-1",
+    cover: "/images/books/red-rising.jpg",
+    spine: "terracotta",
+  },
+];
+
+const previouslyRead: ReadingBook[] = [
+  {
+    title: "Metamorphosis",
+    author: "Franz Kafka",
+    href: "https://www.goodreads.com/book/show/485894.The_Metamorphosis",
+    cover: "/images/books/metamorphosis.jpg",
+    spine: "ink",
+  },
+  {
+    title: "The Poppy War",
+    author: "R. F. Kuang",
+    href: "https://www.goodreads.com/book/show/32718027-the-poppy-war",
+    cover: "/images/books/the-poppy-war.jpg",
+    spine: "terracotta",
+  },
+  {
+    title: "The Burnout Society",
+    author: "Byung-Chul Han",
+    href: "https://www.goodreads.com/book/show/23281948-the-burnout-society",
+    cover: "/images/books/burnout-society.webp",
+    spine: "moss",
+  },
+  {
+    title: "Beyond Good and Evil",
+    author: "Friedrich Nietzsche",
+    href: "https://www.goodreads.com/book/show/10820.Beyond_Good_and_Evil",
+    cover: "/images/books/beyond-good-and-evil.jpg",
+    spine: "ochre",
+  },
+  {
+    title: "Fairy Tale",
+    author: "Stephen King",
+    href: "https://www.goodreads.com/book/show/58784475-fairy-tale",
+    cover: "/images/books/fairy-tale.webp",
+    spine: "ink",
+  },
+  {
+    title: "Holly",
+    author: "Stephen King",
+    href: "https://www.goodreads.com/book/show/61431434-holly",
+    cover: "/images/books/holly.jpg",
+    spine: "terracotta",
+  },
+];
+
 export const NOW = {
   updated: "September 2026",
-  reading: [
-    {
-      title: "Deep Learning",
-      author: "Ian Goodfellow, Yoshua Bengio & Aaron Courville",
-      href: "https://www.deeplearningbook.org",
-      cover: "/images/books/deep-learning.jpg",
-      spine: "ink" as const,
-    },
-    {
-      title: "AI Engineering",
-      author: "Chip Huyen",
-      href: "https://www.oreilly.com/library/view/ai-engineering/9781098166298/",
-      cover: "/images/books/ai-engineering.jpg",
-      spine: "terracotta" as const,
-    },
-    {
-      title: "Designing Machine Learning Systems",
-      author: "Chip Huyen",
-      href: "https://www.oreilly.com/library/view/designing-machine-learning/9781098107956/",
-      cover: "/images/books/designing-ml-systems.jpg",
-      spine: "moss" as const,
-    },
-    {
-      title: "Linear Algebra and Learning from Data",
-      author: "Gilbert Strang",
-      href: "https://math.mit.edu/~gs/learningfromdata/",
-      cover: "/images/books/strang-linear-algebra.jpg",
-      spine: "ochre" as const,
-    },
-  ],
+  reading,
+  previouslyRead,
   building: [
     {
       title: "Stormlog",
@@ -81,6 +146,4 @@ export const NOW = {
   ],
 } as const;
 
-export type BookSpine = (typeof NOW.reading)[number]["spine"];
-export type ReadingBook = (typeof NOW.reading)[number];
 export type LearningItem = (typeof NOW.learning)[number];
