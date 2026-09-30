@@ -69,7 +69,7 @@ export function Bookshelf({ books }: { books: readonly ReadingBook[] }) {
   const current = books[active] ?? books[0];
 
   return (
-    <div>
+    <div className="max-w-[560px]">
       <div className="-mx-4 flex items-end gap-3 overflow-x-auto px-4 pb-1 pt-6 scroll-smooth snap-x snap-mandatory sm:mx-0 sm:px-0 md:gap-4">
         {books.map((book, i) => (
           <a
