@@ -58,3 +58,10 @@ describe("writing posts", () => {
     expect(figures.length).toBeGreaterThan(5);
   });
 });
+
+describe("standalone posts", () => {
+  it("keeps standalone posts out of the dynamic route's static params", () => {
+    const standalone = getPosts().filter((p) => p.standalone);
+    expect(standalone.map((p) => p.slug)).toContain("what-is-stormlog");
+  });
+});

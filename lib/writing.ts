@@ -11,6 +11,10 @@ const postSchema = z.object({
   excerpt: z.string(),
   published: z.boolean().default(true),
   companionSlug: z.string().optional(),
+  /** The page has its own route under app/writing/<slug>, so the dynamic [slug] route skips it. */
+  standalone: z.boolean().default(false),
+  /** Overrides the word-count estimate for pages whose text lives in components. */
+  readingMinutes: z.number().positive().optional(),
 });
 
 export type Post = z.infer<typeof postSchema> & {
@@ -42,7 +46,9 @@ export function getPosts(): Post[] {
       return {
         ...parsed.data,
         content,
-        readingTime: readingTime(content).text,
+        readingTime: parsed.data.readingMinutes
+          ? `${parsed.data.readingMinutes} min read`
+          : readingTime(content).text,
       };
     })
     .filter((p): p is Post => p !== null)
