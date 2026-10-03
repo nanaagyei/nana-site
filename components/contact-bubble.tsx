@@ -36,6 +36,26 @@ function getErrorMessage(context: "network" | "api" | "validation", detail?: str
   }
 }
 
+const HINT_KEY = "contact_hint_seen";
+const HINT_DELAY_MS = 5_000;
+const HINT_VISIBLE_MS = 14_000;
+
+function hintAlreadySeen(): boolean {
+  try {
+    return localStorage.getItem(HINT_KEY) === "1";
+  } catch {
+    return false;
+  }
+}
+
+function rememberHint() {
+  try {
+    localStorage.setItem(HINT_KEY, "1");
+  } catch {
+    // Storage can be blocked. The hint then lasts for this page view only.
+  }
+}
+
 // Web3Forms access keys are designed to be public (embedded in HTML forms)
 const WEB3FORMS_KEY = "e20154dc-c1ee-46f0-a0eb-dde0dd9135c0";
 
@@ -47,6 +67,38 @@ export function ContactBubble() {
   const panelRef = useRef<HTMLDivElement>(null);
   const nameInputRef = useRef<HTMLInputElement>(null);
   const timerRef = useRef<ReturnType<typeof setTimeout>>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const hintTimerRef = useRef<ReturnType<typeof setTimeout>>(null);
+  const [hintVisible, setHintVisible] = useState(false);
+
+  const clearHintTimer = useCallback(() => {
+    if (hintTimerRef.current) clearTimeout(hintTimerRef.current);
+  }, []);
+
+  // Closing the hint, for any reason, counts as seen so it doesn't return on later page loads.
+  const closeHint = useCallback(() => {
+    clearHintTimer();
+    setHintVisible(false);
+    rememberHint();
+  }, [clearHintTimer]);
+
+  const startHintTimer = useCallback(() => {
+    clearHintTimer();
+    hintTimerRef.current = setTimeout(closeHint, HINT_VISIBLE_MS);
+  }, [clearHintTimer, closeHint]);
+
+  // Show the hint once, a few seconds after load, unless the visitor has seen it before.
+  useEffect(() => {
+    if (hintAlreadySeen()) return;
+    const showTimer = setTimeout(() => {
+      setHintVisible(true);
+      startHintTimer();
+    }, HINT_DELAY_MS);
+    return () => {
+      clearTimeout(showTimer);
+      clearHintTimer();
+    };
+  }, [startHintTimer, clearHintTimer]);
 
   // Clear any pending timeout on unmount
   useEffect(() => {
@@ -349,7 +401,11 @@ export function ContactBubble() {
 
       {/* Floating button */}
       <button
-        onClick={() => setIsOpen((prev) => !prev)}
+        ref={buttonRef}
+        onClick={() => {
+          setIsOpen((prev) => !prev);
+          closeHint();
+        }}
         className={`fixed bottom-6 right-4 z-50 flex h-12 w-12 items-center justify-center rounded-full shadow-lg transition-all duration-300 hover:shadow-xl sm:right-6 ${
           isOpen
             ? "bg-ink text-paper"
@@ -375,6 +431,62 @@ export function ContactBubble() {
           )}
         </svg>
       </button>
+
+      {/* Hint bubble: points at the button, dismissible, shown once. Placed after the button so Tab reaches the button first. */}
+      {hintVisible && !isOpen ? (
+        <aside
+          aria-label="Contact hint"
+          className="contact-hint fixed bottom-6 right-[4.75rem] z-50 w-[min(17rem,calc(100vw-7rem))] sm:right-[5.25rem]"
+          onMouseEnter={clearHintTimer}
+          onMouseLeave={startHintTimer}
+          onFocus={clearHintTimer}
+          onBlur={startHintTimer}
+          onKeyDown={(e) => {
+            if (e.key === "Escape") {
+              closeHint();
+              buttonRef.current?.focus();
+            }
+          }}
+        >
+          <div className="relative flex items-start gap-1 rounded-lg border border-paper-edge bg-paper py-2.5 pr-1.5 pl-3.5 shadow-lg shadow-ink/5">
+            <button
+              type="button"
+              onClick={() => {
+                setIsOpen(true);
+                closeHint();
+              }}
+              className="rounded-sm text-left text-sm leading-snug text-ink-soft transition-colors duration-150 hover:text-ink"
+            >
+              Got a thought? Send me a note here. I read every message.
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                closeHint();
+                buttonRef.current?.focus();
+              }}
+              className="-mt-0.5 shrink-0 rounded-sm p-1.5 text-ink-faded transition-colors duration-150 hover:bg-paper-edge/50 hover:text-ink"
+              aria-label="Dismiss this hint"
+            >
+              <svg
+                viewBox="0 0 16 16"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                className="h-3.5 w-3.5"
+                aria-hidden="true"
+              >
+                <path d="M4 4l8 8M12 4l-8 8" />
+              </svg>
+            </button>
+            <span
+              aria-hidden="true"
+              className="absolute -right-[6px] bottom-[1.05rem] h-3 w-3 rotate-45 border-t border-r border-paper-edge bg-paper"
+            />
+          </div>
+        </aside>
+      ) : null}
     </>
   );
 }
