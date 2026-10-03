@@ -402,7 +402,7 @@ stormlog infer analyze infer.jsonl`}
         <ExpandableTechnicalDetail summary="How I checked these commands">
           <Prose>
             <p>
-              I ran the CPU-only sequence above, and the <code>query</code> command, against a fresh install of stormlog 0.4.0 from PyPI on a machine without a GPU. The inference command ran against a local stub server, so I checked its options and artifact output, not its behavior against a deployed model. The two Python examples follow the v0.4.0 usage guide. I haven’t run <code>GPUMemoryProfiler</code> or <code>MemoryTracker</code> on a GPU for this article.
+              I ran the CPU-only sequence above, and the <code>query</code> command, against a fresh install of stormlog 0.4.0 from PyPI on a machine without a GPU. The inference command ran against a local stub server, so I checked its options and artifact output, not its behavior against a deployed model. I ran the tracker example through <code>MemoryTracker</code> with an injected device-only collector, which is how I found that <code>peak_memory</code> is <code>None</code> when a backend has no allocator counters. <code>GPUMemoryProfiler</code> refuses to start without a supported accelerator, so I checked its calls against the 0.4.0 source instead of running it, and I haven’t run either class on a GPU.
             </p>
           </Prose>
         </ExpandableTechnicalDetail>

@@ -294,13 +294,14 @@ with tracker.phase("train"):
 tracker.stop_tracking()
 
 stats = tracker.get_statistics()
-print(f"Peak memory: {stats.get('peak_memory', 0) / (1024**3):.2f} GB")
+peak = stats.get("peak_memory")  # None where the backend has no allocator counters
+print("Peak allocated:", "unavailable" if peak is None else f"{peak / 1024**3:.2f} GB")
 print(f"Events: {stats.get('total_events', 0)}")`}
-          caption="A time-based question. sampling_interval is in seconds. phase() writes enter and exit events, so later analysis can say which phase a spike belongs to. A clean stop_tracking() marks the session completed."
+          caption="A time-based question. sampling_interval is in seconds. phase() writes enter and exit events, so later analysis can say which phase a spike belongs to. peak_memory comes from allocator counters, so it is None on a backend without them, and the check keeps the example honest. A clean stop_tracking() marks the session completed."
         />
         <Prose>
           <p>
-            On a machine without a supported GPU, <code>GPUMemoryProfiler</code> and <code>MemoryTracker</code> raise a <code>RuntimeError</code>. Swap in <code>CPUMemoryProfiler</code> or <code>CPUMemoryTracker</code>, which keep the same shape, including <code>phase()</code>, so you can check your instrumentation on a laptop.
+            On a machine without a supported GPU, <code>GPUMemoryProfiler</code> and <code>MemoryTracker</code> raise a <code>RuntimeError</code>. Swap in <code>CPUMemoryProfiler</code> or <code>CPUMemoryTracker</code> to check your instrumentation on a laptop. They offer the same methods (<code>profile_function</code>, <code>get_summary</code>, <code>phase</code>), but the CPU profile result names the function <code>name</code> rather than <code>function_name</code>.
           </p>
         </Prose>
         <p className="text-sm text-ink-faded">
