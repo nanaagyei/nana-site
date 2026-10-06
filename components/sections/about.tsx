@@ -1,6 +1,7 @@
 "use client";
 
 import { Reveal } from "@/components/primitives/reveal";
+import { Pill } from "@/components/primitives/pill";
 import { profile } from "@/lib/profile";
 
 export function About() {
@@ -28,6 +29,24 @@ export function About() {
             </Reveal>
           ))}
         </div>
+
+        <Reveal delay={profile.bio.length * 0.1}>
+          <div className="mt-10">
+            <p
+              id="about-interests"
+              className="mb-3 font-mono text-xs uppercase tracking-[0.14em] text-ink-faded"
+            >
+              On my mind
+            </p>
+            <ul aria-labelledby="about-interests" className="flex flex-wrap gap-2">
+              {profile.interests.map((topic) => (
+                <li key={topic}>
+                  <Pill variant="moss">{topic}</Pill>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </Reveal>
       </div>
     </section>
   );
