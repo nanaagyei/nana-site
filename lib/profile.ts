@@ -10,9 +10,16 @@ export const profile = {
   },
   one_liner: "Open source · ML · Math · Software engineering",
   bio: [
-    "Hey, I'm Prince — most people call me Nana. I'm a mathematician turned software engineer based in Austin. I love building things that help people think more clearly, whether that's a tool for debugging GPU memory or a platform connecting patients with healthcare.",
-    "I studied math through a master's at Oregon State, and that way of thinking stuck with me — I care about understanding systems deeply, not just getting them to run. These days I work in software QA at dynaConnections and spend my evenings building open-source tools in the ML/AI space.",
-    "I'm especially drawn to the intersection of low-level systems and machine learning — profiling memory, understanding how models behave under the hood, and making that knowledge accessible. I also co-founded the Akomapa Health Foundation, where I lead the tech behind Nkwapa, a patient management platform for underserved communities back home in Ghana.",
+    "Hey, I’m Prince, though most people call me Nana. By day I’m a software QA engineer in Austin. By night I build open-source tools for ML, and I run the tech for a health nonprofit back home in Ghana.",
+    "Lately I’m deep in GPU memory, ML systems, and the quiet art of proving that software works. Off the clock: soccer, tennis, pickleball, chess, and a bass guitar that is slowly forgiving me.",
+  ],
+  interests: [
+    "GPU memory",
+    "ML systems",
+    "Evals & testing",
+    "Open source",
+    "Health tech for Ghana",
+    "Learning by building",
   ],
   experience: [
     {

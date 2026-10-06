@@ -1,4 +1,5 @@
 import { highlightCode, type CodeLang } from "@/lib/highlight";
+import { isPrinting } from "@/lib/pdf/print-mode";
 import { CopyButton } from "@/components/article/copy-button";
 
 interface CodeBlockProps {
@@ -15,12 +16,12 @@ export async function CodeBlock({ code, lang, label, caption }: CodeBlockProps) 
   const html = await highlightCode(trimmed, lang);
 
   return (
-    <figure className="code-block my-6 overflow-hidden rounded-[4px] border border-paper-edge bg-paper-deep">
+    <figure data-lang={lang} className="code-block my-6 overflow-hidden rounded-[4px] border border-paper-edge bg-paper-deep">
       <div className="flex items-center justify-between gap-3 border-b border-paper-edge px-3 py-1.5">
         <span className="truncate font-mono text-xs text-ink-faded">
           {label ?? lang}
         </span>
-        <CopyButton text={trimmed} label={label ?? lang} />
+        {isPrinting() ? null : <CopyButton text={trimmed} label={label ?? lang} />}
       </div>
       <div
         className="code-block__body overflow-x-auto"

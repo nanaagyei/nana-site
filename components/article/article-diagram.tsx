@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { isPrinting } from "@/lib/pdf/print-mode";
 import { cn } from "@/lib/utils";
 
 interface ArticleDiagramProps {
@@ -32,7 +33,7 @@ export function ArticleDiagram({
         <span className="text-sm text-ink">{title}</span>
       </figcaption>
       <p className="sr-only">{description}</p>
-      <div className="p-4 sm:p-6">{children}</div>
+      {isPrinting() ? null : <div className="p-4 sm:p-6">{children}</div>}
       {caption ? (
         <div className="border-t border-paper-edge px-4 py-3 text-sm leading-relaxed text-ink-faded">
           {caption}

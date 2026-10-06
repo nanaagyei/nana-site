@@ -3,6 +3,7 @@ import Link from "next/link";
 import { getPostBySlug, getPostNav, getPosts } from "@/lib/writing";
 import { formatDateFull } from "@/lib/utils";
 import { ProjectContent } from "@/app/projects/[slug]/content";
+import { PdfCard, PdfLink } from "@/components/writing/pdf-download";
 import { PostNav } from "@/components/writing/post-nav";
 import type { Metadata } from "next";
 import { OG_IMAGE, socialImages } from "@/lib/metadata";
@@ -75,6 +76,9 @@ export default async function PostPage({ params }: Props) {
             <time dateTime={post.date}>{formatDateFull(post.date)}</time>
             <span>{post.readingTime}</span>
           </div>
+          <div className="mt-1 text-sm">
+            <PdfLink slug={post.slug} title={post.title} />
+          </div>
           {companion ? (
             <p className="mt-5 text-sm text-ink-faded">
               Companion piece:{" "}
@@ -89,6 +93,8 @@ export default async function PostPage({ params }: Props) {
         </header>
 
         <ProjectContent content={post.content} />
+
+        <PdfCard slug={post.slug} title={post.title} />
 
         <PostNav suggested={suggested} previous={previous} next={next} />
       </div>

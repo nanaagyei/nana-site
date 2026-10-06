@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { PdfCard, PdfLink } from "@/components/writing/pdf-download";
 import { PostNav } from "@/components/writing/post-nav";
 import {
   ARTICLE_SUBTITLE,
@@ -65,7 +66,13 @@ export default function WhatIsStormlogPage() {
       <StormlogArticle
         date={post.date}
         readingTime={post.readingTime}
-        footer={<PostNav suggested={suggested} previous={previous} next={next} />}
+        headerExtra={<PdfLink slug={SLUG} title={ARTICLE_TITLE} />}
+        footer={
+          <>
+            <PdfCard slug={SLUG} title={ARTICLE_TITLE} />
+            <PostNav suggested={suggested} previous={previous} next={next} />
+          </>
+        }
       />
     </>
   );

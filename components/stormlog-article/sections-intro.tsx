@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { SiteLink as Link } from "@/components/article/site-link";
 import { ArticleCallout } from "@/components/article/callout";
 import { ArticleDiagram } from "@/components/article/article-diagram";
 import { CodeBlock } from "@/components/article/code-block";
