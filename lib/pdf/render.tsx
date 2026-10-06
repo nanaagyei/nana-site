@@ -15,6 +15,7 @@ import type {
   Table,
 } from "mdast";
 import { diagramLabel } from "@/lib/remark-mermaid";
+import type { DiagramFigure } from "./from-html";
 import { SITE } from "@/lib/site";
 import { highlightForPrint, type CodeToken } from "./highlight";
 import { COLOR, FONT, pdfText } from "./theme";
@@ -293,7 +294,9 @@ function codeBlock(node: Code, ctx: RenderContext) {
         borderLeftColor: COLOR.accent,
       }}
     >
-      {node.lang ? (
+      {node.meta ? (
+        <Text style={{ fontFamily: FONT.mono, fontSize: 7, color: COLOR.faded, marginBottom: 4 }}>{pdfText(node.meta, true)}</Text>
+      ) : node.lang ? (
         <Text style={{ fontFamily: FONT.sans, fontSize: 6.5, letterSpacing: 1, color: COLOR.faded, marginBottom: 4 }}>
           {node.lang.toUpperCase()}
         </Text>
@@ -334,7 +337,7 @@ function listBlock(node: List, ctx: RenderContext, depth = 0): ReactNode {
 function listEntry(item: ListItem, marker: string, ctx: RenderContext, depth: number): ReactNode {
   const check = item.checked === true ? "[x] " : item.checked === false ? "[ ] " : "";
   return (
-    <View style={{ flexDirection: "row", marginBottom: 3 }}>
+    <View wrap={false} style={{ flexDirection: "row", marginBottom: 3 }}>
       <Text
         style={{
           width: 18,
@@ -433,6 +436,44 @@ function tableBlock(node: Table, ctx: RenderContext) {
   );
 }
 
+/** An interactive diagram on the page; on paper, its description carries the information. */
+function diagramFigure(node: DiagramFigure, ctx: RenderContext) {
+  const url = `${SITE.url}/writing/${ctx.slug}`;
+  const n = linkNumber(ctx, url);
+  return (
+    <View
+      wrap={false}
+      style={{
+        marginTop: 4,
+        marginBottom: 13,
+        paddingVertical: 10,
+        paddingHorizontal: 13,
+        borderWidth: 0.7,
+        borderColor: COLOR.rule,
+        borderTopWidth: 2,
+        borderTopColor: COLOR.accent,
+        backgroundColor: COLOR.wash,
+      }}
+    >
+      <Text style={{ fontFamily: FONT.sans, fontSize: 7, letterSpacing: 1.2, color: COLOR.accent, fontWeight: 600 }}>
+        {pdfText(node.label.toUpperCase())}
+      </Text>
+      <Text style={{ fontFamily: FONT.serif, fontSize: 12, fontWeight: 600, lineHeight: 1.3, marginTop: 2 }}>
+        {pdfText(node.title)}
+      </Text>
+      <Text style={{ fontSize: 9.5, lineHeight: 1.55, color: COLOR.soft, marginTop: 5 }}>{pdfText(node.description)}</Text>
+      {node.caption ? (
+        <Text style={{ fontFamily: FONT.sans, fontSize: 8, lineHeight: 1.45, fontStyle: "italic", color: COLOR.faded, marginTop: 5 }}>
+          {pdfText(node.caption)}
+        </Text>
+      ) : null}
+      <Text style={{ fontFamily: FONT.sans, fontSize: 7.5, color: COLOR.faded, marginTop: 6 }}>
+        Drawn as an interactive diagram on the web: see it live at [{n}].
+      </Text>
+    </View>
+  );
+}
+
 /** `<figure><img/><figcaption/></figure>` blocks authored as raw HTML in the MDX. */
 function figureBlock(html: string, ctx: RenderContext) {
   const src = /<img[^>]*\ssrc="([^"]+)"/i.exec(html)?.[1];
@@ -491,6 +532,8 @@ function renderBlockInner(node: RootContent, ctx: RenderContext): ReactNode {
       const text = stripTags(node.value);
       return text ? <Text style={block.paragraph}>{pdfText(text)}</Text> : null;
     }
+    case "diagramFigure":
+      return diagramFigure(node, ctx);
     case "definition":
     case "footnoteDefinition":
     case "yaml":

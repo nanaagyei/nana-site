@@ -1,5 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { getPosts } from "@/lib/writing";
+import { htmlToMdast } from "./from-html";
+import { renderStormlogPdf } from "./stormlog";
 import { breakUrl } from "./article-document";
 import { renderArticlePdf } from "./index";
 import { createContext, plainText, resolveHref } from "./render";
@@ -64,4 +66,28 @@ describe("article PDFs", () => {
     },
     120_000,
   );
+});
+
+describe("component-authored articles", () => {
+  it("turns interactive figures, code and callouts into printable nodes", () => {
+    const tree = htmlToMdast(
+      `<h2>Title<a aria-label="Link to this section: x" href="#x">#</a></h2>
+       <figure><figcaption><span>Figure 1</span><span>Five states</span></figcaption><p class="sr-only">A bar split in five.</p><div><button>step</button></div><div>Illustrative.</div></figure>
+       <figure class="code-block" data-lang="python"><div><span class="truncate">a.py</span><button>copy</button></div><div><pre><code><span class="line">x = 1</span>\n<span class="line">y = 2</span></code></pre></div></figure>
+       <aside><p>Note</p><div><p>Careful.</p></div></aside>`,
+    );
+    const types = tree.children.map((n) => n.type);
+    expect(types).toEqual(["heading", "diagramFigure", "code", "blockquote"]);
+    const [h, fig, code] = tree.children as never[];
+    expect(JSON.stringify(h)).not.toContain('"#"');
+    expect(fig).toMatchObject({ label: "Figure 1", title: "Five states", description: "A bar split in five.", caption: "Illustrative." });
+    expect(code).toMatchObject({ lang: "python", meta: "a.py", value: "x = 1\ny = 2" });
+  });
+
+  it("typesets the Stormlog explainer", async () => {
+    const { getPostBySlug } = await import("@/lib/writing");
+    const pdf = await renderStormlogPdf(getPostBySlug("what-is-stormlog")!);
+    expect(pdf.subarray(0, 5).toString("latin1")).toBe("%PDF-");
+    expect(pdf.length).toBeGreaterThan(50_000);
+  }, 120_000);
 });

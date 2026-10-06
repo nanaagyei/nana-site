@@ -19,17 +19,21 @@ const TOC_THRESHOLD = 4;
 const PAGE_HEIGHT = 792;
 
 export interface ArticleDocumentInput {
-  post: Pick<Post, "slug" | "title" | "date" | "excerpt" | "readingTime" | "content">;
+  post: Pick<Post, "slug" | "title" | "date" | "excerpt" | "readingTime"> & { content?: string };
+  /** Pre-built markdown tree, for articles whose text doesn't live in a markdown file. */
+  tree?: Root;
+  /** Extra items for the title block's meta strip, e.g. a version. */
+  meta?: { label: string; value: string }[];
 }
 
 /**
  * Builds the typeset document: a research-note title block, numbered sections,
  * running header and footer, and every link gathered at the end so it survives printing.
  */
-export async function buildArticleDocument({ post }: ArticleDocumentInput) {
+export async function buildArticleDocument({ post, tree: provided, meta = [] }: ArticleDocumentInput) {
   registerPdfFonts();
 
-  const tree = parser.parse(post.content) as Root;
+  const tree = provided ?? (parser.parse(post.content ?? "") as Root);
   const ctx = createContext(post.slug, post.title);
   await prepare(tree.children, ctx);
 
@@ -127,6 +131,9 @@ export async function buildArticleDocument({ post }: ArticleDocumentInput) {
           <Meta label="AUTHOR" value={SITE.name} />
           <Meta label="PUBLISHED" value={formatDateFull(post.date)} />
           <Meta label="READING TIME" value={post.readingTime.replace(" read", "")} />
+          {meta.map((m) => (
+            <Meta key={m.label} label={m.label} value={m.value} />
+          ))}
         </View>
 
         {showToc ? (
