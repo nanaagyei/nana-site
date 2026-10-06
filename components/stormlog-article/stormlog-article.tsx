@@ -17,10 +17,13 @@ export function StormlogArticle({
   date,
   readingTime,
   footer,
+  headerExtra,
 }: {
   date: string;
   readingTime: string;
   footer?: ReactNode;
+  /** Sits under the byline, e.g. a download link. */
+  headerExtra?: ReactNode;
 }) {
   return (
     <article className="explainer px-4 pt-32 pb-16 sm:px-6">
@@ -46,6 +49,7 @@ export function StormlogArticle({
             <span>{readingTime}</span>
             <span>Stormlog v0.4.0</span>
           </div>
+          {headerExtra ? <div className="mt-1 text-sm">{headerExtra}</div> : null}
         </header>
 
         <div className="lg:grid lg:grid-cols-[180px_minmax(0,720px)] lg:gap-x-14">

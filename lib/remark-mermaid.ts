@@ -10,7 +10,7 @@ function escapeAttribute(value: string): string {
     .replaceAll(">", "&gt;");
 }
 
-function diagramLabel(source: string): string {
+export function diagramLabel(source: string): string {
   const titleLine = source.split("\n").find((line) => line.startsWith("%%"));
   if (!titleLine) return "Diagram";
   return (
